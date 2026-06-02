@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RealVerify - Verified Real Estate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .home-navbar .nav-container {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 2rem;
+        }
+
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        .brand-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            color: var(--gold);
+            border: 1px solid rgba(201, 168, 76, 0.45);
+            border-radius: 50%;
+            background: rgba(201, 168, 76, 0.08);
+        }
+
+        .home-navbar .nav-links {
+            justify-content: center;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .login-link {
+            color: var(--text-primary);
+            font-weight: 700;
+            transition: color 0.25s ease;
+        }
+
+        .login-link:hover,
+        .login-link:focus-visible {
+            color: var(--gold-light);
+        }
+
+        .home-hero {
+            background:
+                linear-gradient(rgba(10, 10, 10, 0.62), rgba(10, 10, 10, 0.92)),
+                radial-gradient(circle at 20% 20%, rgba(201, 168, 76, 0.22), transparent 34%),
+                radial-gradient(circle at 80% 70%, rgba(232, 201, 126, 0.12), transparent 30%),
+                var(--bg-primary);
+        }
+
+        .hero-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.25rem;
+            padding: 0.5rem 0.9rem;
+            color: var(--gold-light);
+            border: 1px solid rgba(201, 168, 76, 0.35);
+            border-radius: 999px;
+            background: rgba(201, 168, 76, 0.08);
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+        }
+
+        .stats-bar {
+            padding: 2.25rem 0;
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            text-align: center;
+        }
+
+        .stat-card {
+            padding: 1.5rem;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat-card:last-child {
+            border-right: 0;
+        }
+
+        .stat-number {
+            display: block;
+            color: var(--gold);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .stat-label {
+            display: block;
+            margin-top: 0.65rem;
+            color: var(--text-primary);
+            font-weight: 700;
+        }
+
+        .steps-grid,
+        .properties-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+        }
+
+        .step-card,
+        .property-card {
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
+            border: 1px solid var(--border);
+            border-radius: 26px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
+        }
+
+        .step-card {
+            padding: 2rem;
+        }
+
+        .step-card::before,
+        .property-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background: linear-gradient(135deg, rgba(201, 168, 76, 0.14), transparent 42%);
+        }
+
+        .step-number {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.5rem;
+            color: rgba(201, 168, 76, 0.2);
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 4.5rem;
+            font-weight: 800;
+            line-height: 1;
+        }
+
+        .step-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 62px;
+            height: 62px;
+            margin-bottom: 1.5rem;
+            color: var(--gold);
+            border: 1px solid rgba(201, 168, 76, 0.45);
+            border-radius: 18px;
+            background: rgba(201, 168, 76, 0.08);
+        }
+
+        .step-card h3,
+        .property-card h3 {
+            margin-bottom: 0.75rem;
+            font-size: 1.5rem;
+        }
+
+        .featured-properties {
+            background: var(--bg-secondary);
+            border-top: 1px solid var(--border);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .property-card {
+            padding: 1rem;
+        }
+
+        .property-image {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 230px;
+            margin-bottom: 1.25rem;
+            color: rgba(232, 201, 126, 0.8);
+            border: 1px solid rgba(201, 168, 76, 0.55);
+            border-radius: 20px;
+            background:
+                linear-gradient(135deg, rgba(201, 168, 76, 0.16), transparent 46%),
+                #080808;
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.2rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+
+        .property-body {
+            position: relative;
+            z-index: 1;
+            padding: 0 0.5rem 0.5rem;
+        }
+
+        .property-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin: 1rem 0 1.25rem;
+        }
+
+        .property-location {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+
+        .property-price {
+            color: var(--gold);
+            font-size: 1.25rem;
+            font-weight: 800;
+        }
+
+        .verified-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.38rem 0.75rem;
+            color: var(--bg-primary);
+            background: var(--gold);
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 800;
+        }
+
+        .property-card .btn-secondary {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .cta-section {
+            background:
+                radial-gradient(circle at 50% 20%, rgba(201, 168, 76, 0.16), transparent 36%),
+                var(--bg-primary);
+        }
+
+        .cta-box {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: clamp(2rem, 6vw, 4.5rem);
+            text-align: center;
+            border: 1px solid rgba(201, 168, 76, 0.6);
+            border-radius: 32px;
+            background: linear-gradient(145deg, rgba(201, 168, 76, 0.1), rgba(17, 17, 17, 0.98));
+            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+        }
+
+        .cta-box h2 {
+            margin-bottom: 1rem;
+            font-size: clamp(2rem, 5vw, 4rem);
+        }
+
+        .cta-box p {
+            max-width: 650px;
+            margin: 0 auto 2rem;
+            font-size: 1.1rem;
+        }
+
+        .footer-logo {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.7rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-column {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        @media (max-width: 768px) {
+            .home-navbar .nav-container {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                padding: 1rem 0;
+            }
+
+            .home-navbar .nav-links,
+            .nav-actions {
+                justify-content: flex-start;
+            }
+
+            .stats-grid,
+            .steps-grid,
+            .properties-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stat-card {
+                border-right: 0;
+                border-bottom: 1px solid var(--border);
+            }
+
+            .stat-card:last-child {
+                border-bottom: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .home-navbar .nav-links,
+            .nav-actions {
+                width: 100%;
+            }
+
+            .nav-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .login-link {
+                text-align: center;
+            }
+
+            .home-hero {
+                padding-top: 260px;
+            }
+
+            .property-meta {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="navbar home-navbar">
+        <nav class="nav-container" aria-label="Main navigation">
+            <a class="brand logo" href="index.html" aria-label="RealVerify home">
+                <span class="brand-icon" aria-hidden="true">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </span>
+                RealVerify
+            </a>
+
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="property-listing.html">Properties</a>
+            </div>
+
+            <div class="nav-actions">
+                <a class="login-link" href="login.html">Login</a>
+                <a class="nav-signup" href="signup.html">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero home-hero" id="home">
+            <div class="hero-content">
+                <span class="hero-kicker">Fraud-Free Property Deals</span>
+                <h1>Verify Before You Buy</h1>
+                <p>The only real estate platform where every listing is verified and fraud-free</p>
+                <div class="hero-actions">
+                    <a class="btn-primary" href="property-listing.html">Browse Properties</a>
+                    <a class="btn-secondary" href="signup.html">List Your Property</a>
+                </div>
+            </div>
+        </section>
+
+        <section class="stats-bar" aria-label="RealVerify platform statistics">
+            <div class="container stats-grid">
+                <div class="stat-card">
+                    <span class="stat-number">1,200+</span>
+                    <span class="stat-label">Verified Properties</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">98%</span>
+                    <span class="stat-label">Fraud Detection Rate</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-number">5,000+</span>
+                    <span class="stat-label">Happy Users</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="how-it-works">
+            <div class="container">
+                <h2 class="section-title">How It Works</h2>
+                <div class="steps-grid">
+                    <article class="step-card">
+                        <span class="step-number">01</span>
+                        <span class="step-icon" aria-hidden="true">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 16V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                <path d="M7.5 8.5L12 4L16.5 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M5 14V18C5 19.1 5.9 20 7 20H17C18.1 20 19 19.1 19 18V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <h3>Upload Your Property</h3>
+                        <p>Submit your property details, ownership documents, photos, and location information through our secure listing process.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <span class="step-number">02</span>
+                        <span class="step-icon" aria-hidden="true">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                                <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <h3>We Verify Documents</h3>
+                        <p>Our verification team checks ownership, identity, title records, and risk signals before a listing is approved.</p>
+                    </article>
+
+                    <article class="step-card">
+                        <span class="step-number">03</span>
+                        <span class="step-icon" aria-hidden="true">
+                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </span>
+                        <h3>Buy or Sell Safely</h3>
+                        <p>Move forward with confidence using verified listings, trusted sellers, and transparent property information.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="featured-properties">
+            <div class="container">
+                <h2 class="section-title">Featured Verified Properties</h2>
+                <div class="properties-grid">
+                    <article class="property-card">
+                        <div class="property-image">Verified Home</div>
+                        <div class="property-body">
+                            <span class="verified-badge">Verified</span>
+                            <h3>Victoria Island Penthouse</h3>
+                            <div class="property-meta">
+                                <span class="property-location">Lagos</span>
+                                <span class="property-price">₦320M</span>
+                            </div>
+                            <a class="btn-secondary" href="property-listing.html">View Details</a>
+                        </div>
+                    </article>
+
+                    <article class="property-card">
+                        <div class="property-image">Verified Villa</div>
+                        <div class="property-body">
+                            <span class="verified-badge">Verified</span>
+                            <h3>Maitama Executive Villa</h3>
+                            <div class="property-meta">
+                                <span class="property-location">Abuja</span>
+                                <span class="property-price">₦450M</span>
+                            </div>
+                            <a class="btn-secondary" href="property-listing.html">View Details</a>
+                        </div>
+                    </article>
+
+                    <article class="property-card">
+                        <div class="property-image">Verified Estate</div>
+                        <div class="property-body">
+                            <span class="verified-badge">Verified</span>
+                            <h3>GRA Waterfront Duplex</h3>
+                            <div class="property-meta">
+                                <span class="property-location">Port Harcourt</span>
+                                <span class="property-price">₦210M</span>
+                            </div>
+                            <a class="btn-secondary" href="property-listing.html">View Details</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <div class="cta-box">
+                    <h2>Ready to Buy or Sell with Confidence?</h2>
+                    <p>RealVerify protects buyers, sellers, and agents with document verification, fraud screening, and trusted property intelligence.</p>
+                    <a class="btn-primary" href="signup.html">Get Started Today</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div>
+                <a class="footer-logo logo" href="index.html">
+                    <span class="brand-icon" aria-hidden="true">
+                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
+                            <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+                    RealVerify
+                </a>
+                <p>Verified real estate for safer property decisions across Nigeria.</p>
+            </div>
+
+            <div class="footer-column">
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="property-listing.html">Properties</a>
+                <a href="#how-it-works">How It Works</a>
+                <a href="signup.html">Sign Up</a>
+            </div>
+
+            <div class="footer-column">
+                <h4>Contact</h4>
+                <a href="mailto:hello@realverify.ng">hello@realverify.ng</a>
+                <a href="tel:+2348000000000">+234 800 000 0000</a>
+                <p>Lagos, Nigeria</p>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <p>&copy; 2025 RealVerify. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="js/supabase.js"></script>
+</body>
+</html>
