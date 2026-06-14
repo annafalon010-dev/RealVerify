@@ -122,6 +122,16 @@ function createPropertyCard(property) {
     `;
 }
 
+function revealRenderedCards() {
+    const cards = Array.from(document.querySelectorAll('#property-grid .property-card, #similar-properties .property-card'));
+
+    cards.forEach((card, index) => {
+        window.setTimeout(() => {
+            card.classList.add('is-visible');
+        }, index * 70);
+    });
+}
+
 function showSkeletons() {
     const propertyGrid = document.getElementById('property-grid');
 
@@ -130,7 +140,7 @@ function showSkeletons() {
     }
 
     const skeletonCards = Array.from({ length: 6 }, () => `
-        <article class="property-card" aria-label="Loading property">
+        <article class="property-card is-visible" aria-label="Loading property">
             <div class="property-card-image skeleton"></div>
             <div class="property-card-body">
                 <div class="skeleton skeleton-line title"></div>
@@ -167,6 +177,24 @@ function applyPriceFilter(query, priceValue) {
     }
 
     return query;
+}
+
+function sortProperties(properties, sortValue) {
+    const sortedProperties = [...properties];
+
+    if (sortValue === 'price-asc') {
+        return sortedProperties.sort((a, b) => Number(a.price || 0) - Number(b.price || 0));
+    }
+
+    if (sortValue === 'price-desc') {
+        return sortedProperties.sort((a, b) => Number(b.price || 0) - Number(a.price || 0));
+    }
+
+    if (sortValue === 'location-asc') {
+        return sortedProperties.sort((a, b) => String(a.location || '').localeCompare(String(b.location || '')));
+    }
+
+    return sortedProperties.sort((a, b) => new Date(b.created_at || 0) - new Date(a.created_at || 0));
 }
 
 function setListingEmptyState(isEmpty) {
@@ -243,6 +271,7 @@ function renderCurrentPropertyPage() {
 
     setListingEmptyState(false);
     propertyGrid.innerHTML = visibleProperties.map(createPropertyCard).join('');
+    revealRenderedCards();
 }
 
 async function loadProperties() {
@@ -257,6 +286,7 @@ async function loadProperties() {
     const typeValue = getInputValue('filter-type');
     const priceValue = getInputValue('filter-price');
     const statusValue = getInputValue('filter-status') || 'verified';
+    const sortValue = getInputValue('sort-by') || 'date-desc';
 
     setListingEmptyState(false);
     updatePaginationControls(0);
@@ -293,7 +323,7 @@ async function loadProperties() {
             throw error;
         }
 
-        currentProperties = data || [];
+        currentProperties = sortProperties(data || [], sortValue);
 
         renderCurrentPropertyPage();
     } catch (error) {
@@ -345,6 +375,7 @@ function initListingPage() {
     const searchInput = document.getElementById('search-input');
     const filterBar = document.getElementById('filter-bar');
     const clearFiltersBtn = document.querySelector('.clear-filters-btn');
+    const filterControls = Array.from(document.querySelectorAll('#filter-location, #filter-type, #filter-price, #filter-status, #sort-by'));
 
     setupPaginationButtons();
     loadFirstPage();
@@ -372,6 +403,10 @@ function initListingPage() {
         });
     }
 
+    filterControls.forEach((control) => {
+        control.addEventListener('change', loadFirstPage);
+    });
+
     if (clearFiltersBtn) {
         clearFiltersBtn.addEventListener('click', () => {
             const searchInputElement = document.getElementById('search-input');
@@ -379,6 +414,7 @@ function initListingPage() {
             const typeFilter = document.getElementById('filter-type');
             const priceFilter = document.getElementById('filter-price');
             const statusFilter = document.getElementById('filter-status');
+            const sortBy = document.getElementById('sort-by');
 
             if (searchInputElement) {
                 searchInputElement.value = '';
@@ -398,6 +434,10 @@ function initListingPage() {
 
             if (statusFilter) {
                 statusFilter.value = 'verified';
+            }
+
+            if (sortBy) {
+                sortBy.value = 'date-desc';
             }
 
             loadFirstPage();
@@ -599,6 +639,7 @@ async function loadSimilarProperties(type, currentId) {
         }
 
         similarProperties.innerHTML = properties.map(createPropertyCard).join('');
+        revealRenderedCards();
     } catch (error) {
         console.error('Error loading similar properties:', error);
 

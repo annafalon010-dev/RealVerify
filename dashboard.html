@@ -6,146 +6,105 @@
     <title>RealVerify - Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 <body>
+    <div class="page-loader" aria-hidden="true"><div class="loader-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+
     <header class="navbar dashboard-navbar">
         <nav class="nav-container" aria-label="Dashboard navigation">
-            <a class="brand logo" href="index.html" aria-label="RealVerify home">
-                <span class="brand-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                RealVerify
-            </a>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-            </div>
-
-            <div class="nav-actions">
-                <a class="view-site-link" href="dashboard.html">My Dashboard</a>
-                <button class="dashboard-signout" id="dashboard-signout-btn" type="button">Sign Out</button>
+            <a class="brand logo" href="index.html" aria-label="RealVerify home"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a>
+            <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <div class="nav-menu">
+                <div class="nav-links"><a href="index.html">Home</a><a href="property-listing.html">Properties</a></div>
+                <div class="nav-actions"><a class="view-site-link" href="dashboard.html">My Dashboard</a><button class="dashboard-signout" id="dashboard-signout-btn" type="button">Sign Out</button></div>
             </div>
         </nav>
     </header>
 
     <div class="dashboard-wrapper">
         <aside class="sidebar" aria-label="Dashboard sidebar">
-            <div>
-                <div class="sidebar-logo">
-                    <span class="brand-icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                            <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    My Dashboard
-                </div>
-                <p class="sidebar-subtext">Manage verified property activity</p>
+            <div class="sidebar-header">
+                <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar"><span></span><span></span></button>
+
+                <div class="sidebar-logo"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>My Dashboard</div>
+                <p class="sidebar-subtext">Manage verified Nigerian property activity.</p>
             </div>
 
             <nav class="sidebar-nav" aria-label="Dashboard sections">
-                <a class="sidebar-link" href="#dashboard-overview" data-section="dashboard-overview">Overview</a>
-                <a class="sidebar-link" href="#dashboard-properties" data-section="dashboard-properties">My Properties</a>
-                <a class="sidebar-link" href="#dashboard-notifications" data-section="dashboard-notifications">Notifications</a>
-                <a class="sidebar-link" href="upload.html">Upload Property</a>
-                <a class="sidebar-link" id="admin-link" href="admin-dashboard.html" hidden>Admin Panel</a>
+                <a class="sidebar-link" href="#dashboard-overview" data-section="dashboard-overview"><span class="sidebar-link-icon">OV</span><span>Overview</span><span class="sidebar-tooltip">Overview</span></a>
+                <a class="sidebar-link" href="#dashboard-properties" data-section="dashboard-properties"><span class="sidebar-link-icon">PR</span><span>My Properties</span><span class="sidebar-tooltip">My Properties</span></a>
+                <a class="sidebar-link" href="#dashboard-notifications" data-section="dashboard-notifications"><span class="sidebar-link-icon">NT</span><span>Notifications</span><span class="sidebar-tooltip">Notifications</span></a>
+                <a class="sidebar-link" href="upload.html"><span class="sidebar-link-icon">UP</span><span>Upload Property</span><span class="sidebar-tooltip">Upload Property</span></a>
+                <a class="sidebar-link" id="admin-link" href="admin-dashboard.html" hidden><span class="sidebar-link-icon">AD</span><span>Admin Panel</span><span class="sidebar-tooltip">Admin Panel</span></a>
             </nav>
 
-            <div class="sidebar-footer">
-                <button class="sidebar-signout" id="signout-btn-sidebar" type="button">Sign Out</button>
-            </div>
+            <div class="sidebar-footer"><button class="sidebar-signout" id="signout-btn-sidebar" type="button">Sign Out</button></div>
         </aside>
 
         <main class="dashboard-main">
             <section class="dashboard-section" id="dashboard-overview" data-dashboard-section="dashboard-overview">
-                <div class="section-header">
+                <div class="dashboard-hero-card reveal">
                     <div>
+                        <span class="section-kicker">Account overview</span>
                         <h1>Welcome, <span class="gold-text" id="user-name">RealVerify User</span></h1>
-                        <p>Track your property listings, verification status, and platform notifications.</p>
+                        <p>Track listings, approvals, and alerts from your verified property dashboard.</p>
                     </div>
                     <a class="dashboard-primary-btn" href="upload.html">Upload New Property</a>
                 </div>
 
                 <div class="stats-grid">
-                    <article class="stat-card">
-                        <span class="stat-number" id="stat-total">0</span>
-                        <span class="stat-label">Total Listings</span>
-                    </article>
-
-                    <article class="stat-card">
-                        <span class="stat-number" id="stat-verified">0</span>
-                        <span class="stat-label">Verified</span>
-                    </article>
-
-                    <article class="stat-card">
-                        <span class="stat-number" id="stat-pending">0</span>
-                        <span class="stat-label">Pending Review</span>
-                    </article>
-
-                    <article class="stat-card">
-                        <span class="stat-number" id="stat-rejected">0</span>
-                        <span class="stat-label">Rejected</span>
-                    </article>
+                    <article class="stat-card reveal"><span class="stat-number" id="stat-total">0</span><span class="stat-label">Total Listings</span></article>
+                    <article class="stat-card reveal"><span class="stat-number" id="stat-verified">0</span><span class="stat-label">Verified</span></article>
+                    <article class="stat-card reveal"><span class="stat-number" id="stat-pending">0</span><span class="stat-label">Pending Review</span></article>
+                    <article class="stat-card reveal"><span class="stat-number" id="stat-rejected">0</span><span class="stat-label">Rejected</span></article>
                 </div>
 
                 <div class="dashboard-grid">
-                    <article class="dashboard-card">
+                    <article class="dashboard-card reveal">
                         <h2>Recent Properties</h2>
-                        <div class="dashboard-list" id="recent-properties">
-                            <div class="dashboard-loading">Loading your properties...</div>
+                        <div class="dashboard-list" id="recent-properties"><div class="dashboard-loading">Loading your properties...</div></div>
+                    </article>
+
+                    <article class="dashboard-card status-chart-card reveal">
+                        <h2>Status Breakdown</h2>
+                        <div class="status-donut" id="status-donut"><span class="status-donut-label" id="status-donut-label">0 listings</span></div>
+                        <div class="chart-legend">
+                            <span class="legend-verified">Verified <strong id="legend-verified">0</strong></span>
+                            <span class="legend-pending">Pending <strong id="legend-pending">0</strong></span>
+                            <span class="legend-rejected">Rejected <strong id="legend-rejected">0</strong></span>
                         </div>
                     </article>
 
-                    <article class="dashboard-card">
+                    <article class="dashboard-card reveal">
                         <h2>Latest Notifications</h2>
-                        <div class="dashboard-list" id="recent-notifications">
-                            <div class="dashboard-loading">Loading notifications...</div>
-                        </div>
+                        <div class="dashboard-list" id="recent-notifications"><div class="dashboard-loading">Loading notifications...</div></div>
                     </article>
                 </div>
             </section>
 
             <section class="dashboard-section" id="dashboard-properties" data-dashboard-section="dashboard-properties" hidden>
                 <div class="section-header">
-                    <div>
-                        <h2>My Properties</h2>
-                        <p>All properties you have submitted for verification.</p>
-                    </div>
+                    <div><span class="section-kicker">Your submissions</span><h2>My Properties</h2><p>All properties you have submitted for verification.</p></div>
                     <a class="dashboard-primary-btn" href="upload.html">Add Property</a>
                 </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-list" id="user-properties">
-                        <div class="dashboard-loading">Loading your properties...</div>
-                    </div>
-                </div>
+                <div class="dashboard-card"><div class="dashboard-list" id="user-properties"><div class="dashboard-loading">Loading your properties...</div></div></div>
             </section>
 
             <section class="dashboard-section" id="dashboard-notifications" data-dashboard-section="dashboard-notifications" hidden>
-                <div class="section-header">
-                    <div>
-                        <h2>Notifications</h2>
-                        <p>Updates from RealVerify about your account and listings.</p>
-                    </div>
-                </div>
-                <div class="dashboard-card">
-                    <div class="dashboard-list" id="notifications-list">
-                        <div class="dashboard-loading">Loading notifications...</div>
-                    </div>
-                </div>
+                <div class="section-header"><div><span class="section-kicker">Updates</span><h2>Notifications</h2><p>Updates from RealVerify about your account and listings.</p></div></div>
+                <div class="dashboard-card"><div class="dashboard-list" id="notifications-list"><div class="dashboard-loading">Loading notifications...</div></div></div>
             </section>
         </main>
     </div>
 
+    <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/auth.js"></script>
     <script src="js/dashboard.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

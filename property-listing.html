@@ -3,294 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RealVerify - Browse Properties</title>
+    <title>RealVerify - Browse Verified Properties</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/property.css">
-    <style>
-        [hidden] {
-            display: none !important;
-        }
-
-        .property-navbar .nav-container {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .brand-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.45);
-            border-radius: 50%;
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        .property-navbar .nav-links {
-            justify-content: center;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        .login-link {
-            color: var(--text-primary);
-            font-weight: 700;
-            transition: color 0.25s ease;
-        }
-
-        .login-link:hover,
-        .login-link:focus-visible {
-            color: var(--gold-light);
-        }
-
-        .property-main {
-            padding-top: 78px;
-        }
-
-        .property-page-header {
-            padding: 86px 0 54px;
-            background:
-                radial-gradient(circle at 50% 0%, rgba(201, 168, 76, 0.18), transparent 35%),
-                var(--bg-secondary);
-            border-bottom: 1px solid var(--border);
-            text-align: center;
-        }
-
-        .property-page-header h1 {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 1.4rem;
-            padding-bottom: 1rem;
-            font-size: clamp(2.4rem, 6vw, 5rem);
-        }
-
-        .property-page-header h1::after {
-            content: '';
-            position: absolute;
-            left: 50%;
-            bottom: 0;
-            width: 90px;
-            height: 3px;
-            background: linear-gradient(90deg, var(--gold), var(--gold-light));
-            transform: translateX(-50%);
-        }
-
-        .property-page-header p {
-            color: var(--text-secondary);
-            font-size: 1.1rem;
-        }
-
-        .property-results-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 24px;
-        }
-
-        #results-count {
-            color: var(--text-secondary);
-            font-weight: 700;
-        }
-
-        .skeleton-line {
-            height: 14px;
-            margin-bottom: 12px;
-            border-radius: 999px;
-        }
-
-        .skeleton-line.title {
-            width: 76%;
-            height: 20px;
-        }
-
-        .skeleton-line.location {
-            width: 54%;
-        }
-
-        .skeleton-line.price {
-            width: 42%;
-            height: 22px;
-        }
-
-        .skeleton-line.type {
-            width: 30%;
-            height: 20px;
-        }
-
-        .skeleton-line.button {
-            width: 100%;
-            height: 44px;
-            margin-top: 18px;
-            margin-bottom: 0;
-        }
-
-        .empty-state {
-            width: min(100% - 40px, 720px);
-            margin: 0 auto;
-            padding: 54px 24px;
-            text-align: center;
-            background: #111111;
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
-        }
-
-        .empty-state-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 72px;
-            height: 72px;
-            margin-bottom: 1rem;
-            color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.45);
-            border-radius: 50%;
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        .empty-state h2 {
-            margin-bottom: 0.75rem;
-            font-size: 2rem;
-        }
-
-        .empty-state p {
-            max-width: 460px;
-            margin: 0 auto;
-        }
-
-        .clear-filters-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 44px;
-            margin-top: 1.5rem;
-            padding: 10px 18px;
-            color: var(--bg-primary);
-            background: var(--gold);
-            border: 1px solid var(--gold);
-            border-radius: 999px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-        }
-
-        .clear-filters-btn:hover,
-        .clear-filters-btn:focus-visible {
-            background: var(--gold-light);
-            border-color: var(--gold-light);
-            transform: translateY(-2px);
-        }
-
-        .footer-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-column {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        @media (max-width: 768px) {
-            .property-navbar .nav-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem 0;
-            }
-
-            .property-navbar .nav-links,
-            .nav-actions {
-                justify-content: flex-start;
-            }
-
-            .property-main {
-                padding-top: 220px;
-            }
-
-            .property-results-header {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .property-navbar .nav-links,
-            .nav-actions {
-                width: 100%;
-            }
-
-            .nav-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .login-link {
-                text-align: center;
-            }
-
-            .property-main {
-                padding-top: 300px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <header class="navbar property-navbar">
+    <div class="page-loader" aria-hidden="true"><div class="loader-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+
+    <header class="navbar">
         <nav class="nav-container" aria-label="Main navigation">
-            <a class="brand logo" href="index.html" aria-label="RealVerify home">
-                <span class="brand-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                RealVerify
-            </a>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-            </div>
-
-            <div class="nav-actions">
-                <a class="login-link" href="login.html">Login</a>
-                <a class="nav-signup" href="signup.html">Sign Up</a>
+            <a class="brand logo" href="index.html" aria-label="RealVerify home"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a>
+            <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <div class="nav-menu">
+                <div class="nav-links"><a href="index.html">Home</a><a href="index.html#how-it-works">How It Works</a><a href="property-listing.html">Properties</a></div>
+                <div class="nav-actions"><a class="login-link" href="login.html">Login</a><a class="nav-signup" href="signup.html">Sign Up</a></div>
             </div>
         </nav>
     </header>
 
-    <main class="property-page property-main">
+    <main class="property-page">
         <section class="property-page-header">
-            <div class="container">
-                <h1>Browse Verified Properties</h1>
-                <p>Every listing verified and fraud-free</p>
+            <div class="container reveal">
+                <span class="section-kicker">Verified Nigerian listings</span>
+                <h1 class="gradient-gold">Browse Verified Properties</h1>
+                <p>Filter premium listings by location, type, price, verification status, and freshness.</p>
             </div>
         </section>
 
         <section class="property-search-bar" aria-label="Property filters">
             <form class="property-filter-form" id="filter-bar">
-                <input class="property-search-input" id="search-input" type="search" placeholder="Search by title or location..." aria-label="Search by title or location">
+                <input class="property-search-input" id="search-input" type="search" placeholder="Search by title or Nigerian location..." aria-label="Search by title or location">
 
                 <select class="property-filter-select" id="filter-location" aria-label="Filter by location">
                     <option value="">All Locations</option>
@@ -324,92 +69,32 @@
                     <option value="all">All Listings</option>
                 </select>
 
+                <select class="property-filter-select" id="sort-by" aria-label="Sort properties">
+                    <option value="date-desc">Newest</option>
+                    <option value="price-asc">Price Low to High</option>
+                    <option value="price-desc">Price High to Low</option>
+                    <option value="location-asc">Location A-Z</option>
+                </select>
+
                 <button class="property-search-btn" id="search-btn" type="submit">Search</button>
             </form>
         </section>
 
         <section class="property-listing-section">
             <div class="container property-results-header">
-                <p id="results-count">Showing X properties</p>
+                <p id="results-count">Loading verified properties...</p>
             </div>
 
             <div class="property-grid" id="property-grid" aria-live="polite">
-                <article class="property-card" aria-label="Loading property">
-                    <div class="property-card-image skeleton"></div>
-                    <div class="property-card-body">
-                        <div class="skeleton skeleton-line title"></div>
-                        <div class="skeleton skeleton-line location"></div>
-                        <div class="skeleton skeleton-line price"></div>
-                        <div class="skeleton skeleton-line type"></div>
-                        <div class="skeleton skeleton-line button"></div>
-                    </div>
-                </article>
-
-                <article class="property-card" aria-label="Loading property">
-                    <div class="property-card-image skeleton"></div>
-                    <div class="property-card-body">
-                        <div class="skeleton skeleton-line title"></div>
-                        <div class="skeleton skeleton-line location"></div>
-                        <div class="skeleton skeleton-line price"></div>
-                        <div class="skeleton skeleton-line type"></div>
-                        <div class="skeleton skeleton-line button"></div>
-                    </div>
-                </article>
-
-                <article class="property-card" aria-label="Loading property">
-                    <div class="property-card-image skeleton"></div>
-                    <div class="property-card-body">
-                        <div class="skeleton skeleton-line title"></div>
-                        <div class="skeleton skeleton-line location"></div>
-                        <div class="skeleton skeleton-line price"></div>
-                        <div class="skeleton skeleton-line type"></div>
-                        <div class="skeleton skeleton-line button"></div>
-                    </div>
-                </article>
-
-                <article class="property-card" aria-label="Loading property">
-                    <div class="property-card-image skeleton"></div>
-                    <div class="property-card-body">
-                        <div class="skeleton skeleton-line title"></div>
-                        <div class="skeleton skeleton-line location"></div>
-                        <div class="skeleton skeleton-line price"></div>
-                        <div class="skeleton skeleton-line type"></div>
-                        <div class="skeleton skeleton-line button"></div>
-                    </div>
-                </article>
-
-                <article class="property-card" aria-label="Loading property">
-                    <div class="property-card-image skeleton"></div>
-                    <div class="property-card-body">
-                        <div class="skeleton skeleton-line title"></div>
-                        <div class="skeleton skeleton-line location"></div>
-                        <div class="skeleton skeleton-line price"></div>
-                        <div class="skeleton skeleton-line type"></div>
-                        <div class="skeleton skeleton-line button"></div>
-                    </div>
-                </article>
-
-                <article class="property-card" aria-label="Loading property">
-                    <div class="property-card-image skeleton"></div>
-                    <div class="property-card-body">
-                        <div class="skeleton skeleton-line title"></div>
-                        <div class="skeleton skeleton-line location"></div>
-                        <div class="skeleton skeleton-line price"></div>
-                        <div class="skeleton skeleton-line type"></div>
-                        <div class="skeleton skeleton-line button"></div>
-                    </div>
-                </article>
+                <article class="property-card is-visible" aria-label="Loading property"><div class="property-card-image skeleton"></div><div class="property-card-body"><div class="skeleton skeleton-line title"></div><div class="skeleton skeleton-line location"></div><div class="skeleton skeleton-line price"></div><div class="skeleton skeleton-line type"></div><div class="skeleton skeleton-line button"></div></div></article>
+                <article class="property-card is-visible" aria-label="Loading property"><div class="property-card-image skeleton"></div><div class="property-card-body"><div class="skeleton skeleton-line title"></div><div class="skeleton skeleton-line location"></div><div class="skeleton skeleton-line price"></div><div class="skeleton skeleton-line type"></div><div class="skeleton skeleton-line button"></div></div></article>
+                <article class="property-card is-visible" aria-label="Loading property"><div class="property-card-image skeleton"></div><div class="property-card-body"><div class="skeleton skeleton-line title"></div><div class="skeleton skeleton-line location"></div><div class="skeleton skeleton-line price"></div><div class="skeleton skeleton-line type"></div><div class="skeleton skeleton-line button"></div></div></article>
             </div>
 
             <div class="empty-state" id="empty-state" hidden>
-                <span class="empty-state-icon" aria-hidden="true">
-                    <svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z" stroke="currentColor" stroke-width="1.8"/>
-                        <path d="M16 16L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                    </svg>
-                </span>
+                <span class="empty-state-icon" aria-hidden="true"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10.5 18C14.6421 18 18 14.6421 18 10.5C18 6.35786 14.6421 3 10.5 3C6.35786 3 3 6.35786 3 10.5C3 14.6421 6.35786 18 10.5 18Z" stroke="currentColor" stroke-width="1.8"/><path d="M16 16L21 21" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></span>
                 <h2>No properties found</h2>
-                <p>Try adjusting your filters or search term to discover more verified listings.</p>
+                <p>Try another Nigerian location, property type, or price range.</p>
                 <button class="clear-filters-btn" type="button">Clear Filters</button>
             </div>
 
@@ -423,41 +108,18 @@
 
     <footer class="footer">
         <div class="container footer-grid">
-            <div>
-                <a class="footer-logo logo" href="index.html">
-                    <span class="brand-icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                            <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    RealVerify
-                </a>
-                <p>Verified real estate for safer property decisions across Nigeria.</p>
-            </div>
-
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-                <a href="index.html#how-it-works">How It Works</a>
-                <a href="signup.html">Sign Up</a>
-            </div>
-
-            <div class="footer-column">
-                <h4>Contact</h4>
-                <a href="mailto:hello@realverify.ng">hello@realverify.ng</a>
-                <a href="tel:+2348000000000">+234 800 000 0000</a>
-                <p>Lagos, Nigeria</p>
-            </div>
+            <div><a class="footer-logo logo" href="index.html"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a><p>Verified real estate for safer property decisions across Nigeria.</p></div>
+            <div class="footer-column"><h4>Quick Links</h4><a href="index.html">Home</a><a href="property-listing.html">Properties</a><a href="index.html#how-it-works">How It Works</a><a href="signup.html">Sign Up</a></div>
+            <div class="footer-column"><h4>Contact</h4><a href="mailto:hello@realverify.ng">hello@realverify.ng</a><a href="tel:+2348000000000">+234 800 000 0000</a><p>Lagos, Nigeria</p></div>
+            <div class="footer-column"><h4>Social</h4><div class="social-links"><a class="social-link" href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">Fb</a><a class="social-link" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">X</a><a class="social-link" href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">Ig</a><a class="social-link" href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">In</a><a class="social-link" href="https://wa.me/2348000000000" target="_blank" rel="noopener" aria-label="WhatsApp">Wa</a></div></div>
         </div>
-        <div class="container footer-bottom">
-            <p>&copy; 2025 RealVerify. All rights reserved.</p>
-        </div>
+        <div class="container footer-bottom"><p>&copy; 2025 RealVerify. All rights reserved.</p></div>
     </footer>
 
+    <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/property.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

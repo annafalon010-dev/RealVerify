@@ -1,7 +1,9 @@
-const supabaseUrl = "https://cxvdkcqbqmzebaqvrdhx.supabase.co";
-const supabaseKey = "sb_publishable_E8tsmJ-op8cLFPvnigVsfw_2rKiIy16Y";
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm";
 
-window.RealVerifyConfig = {
-    supabaseUrl,
-    supabaseKey
-};
+// Replace with your Supabase project URL.
+const SUPABASE_URL = "YOUR_SUPABASE_URL_HERE";
+
+// Replace with your Supabase anon public key.
+const SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY_HERE";
+
+export const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);

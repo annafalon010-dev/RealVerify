@@ -120,16 +120,7 @@ function getFilePath(userId, file) {
 }
 
 async function getCurrentSessionUser() {
-    const client = getSupabaseClient();
-    const { data, error } = await client.auth.getSession();
-    const session = data?.session;
-
-    if (error || !session) {
-        window.location.href = 'login.html';
-        return null;
-    }
-
-    return session.user;
+    return checkAuth();
 }
 
 async function uploadFiles(bucket, files, userId, progressStart, progressEnd) {

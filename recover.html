@@ -6,224 +6,70 @@
     <title>RealVerify - Reset Password</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/auth.css">
-    <style>
-        .recover-navbar .nav-container {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .brand-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.45);
-            border-radius: 50%;
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        .recover-navbar .nav-links {
-            justify-content: center;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        .login-link {
-            color: var(--text-primary);
-            font-weight: 700;
-            transition: color 0.25s ease;
-        }
-
-        .login-link:hover,
-        .login-link:focus-visible {
-            color: var(--gold-light);
-        }
-
-        .recover-auth {
-            min-height: 100vh;
-            padding-top: 130px;
-            padding-bottom: 64px;
-        }
-
-        .return-link {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 100%;
-            margin-top: 1.25rem;
-            color: var(--gold);
-            font-weight: 800;
-            text-decoration: none;
-        }
-
-        .return-link:hover,
-        .return-link:focus-visible {
-            color: var(--gold-light);
-            text-decoration: underline;
-        }
-
-        .footer-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-column {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        @media (max-width: 768px) {
-            .recover-navbar .nav-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem 0;
-            }
-
-            .recover-navbar .nav-links,
-            .nav-actions {
-                justify-content: flex-start;
-            }
-
-            .recover-auth {
-                padding-top: 220px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .recover-navbar .nav-links,
-            .nav-actions {
-                width: 100%;
-            }
-
-            .nav-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .login-link {
-                text-align: center;
-            }
-
-            .recover-auth {
-                padding-top: 300px;
-            }
-        }
-    </style>
 </head>
 <body>
-    <header class="navbar recover-navbar">
+    <div class="page-loader" aria-hidden="true"><div class="loader-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+
+    <header class="navbar">
         <nav class="nav-container" aria-label="Main navigation">
-            <a class="brand logo" href="index.html" aria-label="RealVerify home">
-                <span class="brand-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                RealVerify
-            </a>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-            </div>
-
-            <div class="nav-actions">
-                <a class="login-link" href="login.html">Login</a>
-                <a class="nav-signup" href="signup.html">Sign Up</a>
-            </div>
+            <a class="brand logo" href="index.html" aria-label="RealVerify home"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a>
+            <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <div class="nav-menu"><div class="nav-links"><a href="index.html">Home</a><a href="property-listing.html">Properties</a></div><div class="nav-actions"><a class="login-link" href="login.html">Login</a><a class="nav-signup" href="signup.html">Sign Up</a></div></div>
         </nav>
     </header>
 
-    <main class="auth-page recover-auth">
-        <section class="auth-card" aria-labelledby="recover-title">
-            <div class="auth-logo">
-                <span class="auth-logo-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                RealVerify
-            </div>
-            <p class="auth-tagline">Verified real estate starts here</p>
-
-            <h1 class="auth-title" id="recover-title">Reset Your Password</h1>
-            <p class="auth-subtitle">Enter your email address and we will send you a link to reset your password</p>
-
-            <form id="recover-form">
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input id="email" name="email" type="email" placeholder="Enter your registered email" autocomplete="email" required>
+    <main class="auth-page">
+        <div class="auth-shell">
+            <section class="auth-visual" aria-label="Password recovery">
+                <div class="auth-visual-content">
+                    <span class="section-kicker">Secure recovery</span>
+                    <h2>Restore access to your property dashboard.</h2>
+                    <p>We will send a secure reset link to your registered email address.</p>
+                    <ul class="auth-trust-list"><li>Protected account recovery</li><li>Email-based reset link</li><li>Safe access restoration</li></ul>
                 </div>
+            </section>
 
-                <button class="auth-button" id="recover-btn" type="submit">Send Reset Link</button>
-                <div class="error-msg" id="error-msg" role="alert"></div>
-                <div class="success-msg" id="success-msg" role="status" aria-live="polite">Password reset link sent! Please check your email inbox.</div>
-            </form>
+            <section class="auth-panel" aria-labelledby="recover-title">
+                <div class="auth-card">
+                    <div class="auth-logo"><span class="auth-logo-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</div>
+                    <p class="auth-tagline">Verified real estate starts here</p>
+                    <h1 class="auth-title" id="recover-title">Reset Password</h1>
+                    <p class="auth-subtitle">Enter your email and check your inbox for the reset link.</p>
 
-            <a class="return-link" href="login.html">&larr; Return to Sign In</a>
-            <p class="auth-switch">Don't have an account? <a href="signup.html">Sign Up</a></p>
-        </section>
+                    <form id="recover-form">
+                        <div class="floating-field">
+                            <input id="email" name="email" type="email" placeholder="Email" autocomplete="email" required>
+                            <label for="email">Registered email</label>
+                        </div>
+                        <button class="auth-button" id="recover-btn" type="submit">Send Reset Link</button>
+                        <div class="error-msg" id="error-msg" role="alert"></div>
+                        <div class="success-msg" id="success-msg" role="status" aria-live="polite"></div>
+                    </form>
+
+                    <a class="return-link" href="login.html">Return to Sign In</a>
+                    <p class="auth-switch">Don't have an account? <a href="signup.html">Sign Up</a></p>
+                </div>
+            </section>
+        </div>
     </main>
 
     <footer class="footer">
         <div class="container footer-grid">
-            <div>
-                <a class="footer-logo logo" href="index.html">
-                    <span class="brand-icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                            <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    RealVerify
-                </a>
-                <p>Verified real estate for safer property decisions across Nigeria.</p>
-            </div>
-
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-                <a href="index.html#how-it-works">How It Works</a>
-                <a href="signup.html">Sign Up</a>
-            </div>
-
-            <div class="footer-column">
-                <h4>Contact</h4>
-                <a href="mailto:hello@realverify.ng">hello@realverify.ng</a>
-                <a href="tel:+2348000000000">+234 800 000 0000</a>
-                <p>Lagos, Nigeria</p>
-            </div>
+            <div><a class="footer-logo logo" href="index.html"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a><p>Verified real estate for safer property decisions across Nigeria.</p></div>
+            <div class="footer-column"><h4>Quick Links</h4><a href="index.html">Home</a><a href="property-listing.html">Properties</a><a href="index.html#how-it-works">How It Works</a><a href="signup.html">Sign Up</a></div>
+            <div class="footer-column"><h4>Contact</h4><a href="mailto:hello@realverify.ng">hello@realverify.ng</a><a href="tel:+2348000000000">+234 800 000 0000</a><p>Lagos, Nigeria</p></div>
+            <div class="footer-column"><h4>Social</h4><div class="social-links"><a class="social-link" href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">Fb</a><a class="social-link" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">X</a><a class="social-link" href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">Ig</a><a class="social-link" href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">In</a><a class="social-link" href="https://wa.me/2348000000000" target="_blank" rel="noopener" aria-label="WhatsApp">Wa</a></div></div>
         </div>
-        <div class="container footer-bottom">
-            <p>&copy; 2025 RealVerify. All rights reserved.</p>
-        </div>
+        <div class="container footer-bottom"><p>&copy; 2025 RealVerify. All rights reserved.</p></div>
     </footer>
 
+    <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/auth.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>

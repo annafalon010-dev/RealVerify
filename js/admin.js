@@ -44,6 +44,24 @@ function setText(id, value) {
     }
 }
 
+function setStatNumber(id, value) {
+    const element = document.getElementById(id);
+
+    if (!element) {
+        return;
+    }
+
+    element.dataset.countTo = String(value);
+    element.dataset.countSuffix = '';
+
+    if (typeof window.animateRealVerifyCounter === 'function') {
+        window.animateRealVerifyCounter(element);
+        return;
+    }
+
+    element.textContent = String(value);
+}
+
 function showMessage(containerId, message) {
     const container = document.getElementById(containerId);
 
@@ -174,12 +192,12 @@ export async function loadAdminStats() {
         console.error('Admin stats error:', failedResult.error);
     }
 
-    setText('admin-stat-total', totalResult.count || 0);
-    setText('admin-stat-verified', verifiedResult.count || 0);
-    setText('admin-stat-pending', pendingResult.count || 0);
-    setText('admin-stat-rejected', rejectedResult.count || 0);
-    setText('admin-stat-users', usersResult.count || 0);
-    setText('admin-stat-flags', flagsResult.count || 0);
+    setStatNumber('admin-stat-total', totalResult.count || 0);
+    setStatNumber('admin-stat-verified', verifiedResult.count || 0);
+    setStatNumber('admin-stat-pending', pendingResult.count || 0);
+    setStatNumber('admin-stat-rejected', rejectedResult.count || 0);
+    setStatNumber('admin-stat-users', usersResult.count || 0);
+    setStatNumber('admin-stat-flags', flagsResult.count || 0);
 }
 
 export async function loadPendingListings() {
@@ -488,8 +506,6 @@ export function setupAdminSidebar() {
         links.forEach((link) => {
             const isActive = link.dataset.section === sectionName;
             link.classList.toggle('active', isActive);
-            link.style.borderLeft = isActive ? '3px solid #c9a84c' : '3px solid transparent';
-            link.style.color = isActive ? '#c9a84c' : '';
         });
     };
 

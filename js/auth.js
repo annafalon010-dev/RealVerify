@@ -127,8 +127,7 @@ function initSignupForm() {
                 throw new Error('Account created, but user data was not returned. Please check your email to continue.');
             }
 
-            showSuccess('Account created! Redirecting to your dashboard...');
-            redirectTo('dashboard.html', 2000);
+            showSuccess('Account created successfully! Please check your email inbox and click the confirmation link before logging in.');
         } catch (error) {
             showError(error.message || 'Unable to create account. Please try again.');
         } finally {
@@ -167,7 +166,17 @@ function initLoginForm() {
             });
 
             if (error) {
-                showError('Invalid email or password. Please try again.');
+                if (error.message.includes('Email not confirmed')) {
+                    showError('Please check your email inbox and click the confirmation link we sent you before logging in.');
+                    return;
+                }
+
+                if (error.message.includes('Invalid login credentials')) {
+                    showError('Invalid email or password. Please try again.');
+                    return;
+                }
+
+                showError(error.message || 'Unable to sign in. Please try again.');
                 return;
             }
 
@@ -229,11 +238,9 @@ async function signOut() {
 }
 
 async function checkAuth() {
-    const client = getSupabaseClient();
-    const { data, error } = await client.auth.getSession();
-    const session = data?.session;
+    const { data: { session } } = await supabaseClient.auth.getSession();
 
-    if (error || !session) {
+    if (!session) {
         window.location.href = 'login.html';
         return null;
     }

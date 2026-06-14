@@ -52,17 +52,47 @@ function setText(id, value) {
     }
 }
 
-async function getSessionUser() {
-    const client = getSupabaseClient();
-    const { data, error } = await client.auth.getSession();
-    const session = data?.session;
+function setStatNumber(id, value) {
+    const element = document.getElementById(id);
 
-    if (error || !session) {
-        window.location.href = 'login.html';
-        return null;
+    if (!element) {
+        return;
     }
 
-    return session.user;
+    element.dataset.countTo = String(value);
+    element.dataset.countSuffix = '';
+
+    if (typeof window.animateRealVerifyCounter === 'function') {
+        window.animateRealVerifyCounter(element);
+        return;
+    }
+
+    element.textContent = String(value);
+}
+
+function updateStatusChart(total, verified, pending, rejected) {
+    const donut = document.getElementById('status-donut');
+    const label = document.getElementById('status-donut-label');
+
+    const verifiedAngle = total ? (verified / total) * 360 : 0;
+    const pendingAngle = total ? verifiedAngle + ((pending / total) * 360) : 0;
+
+    if (donut) {
+        donut.style.setProperty('--verified-angle', `${verifiedAngle}deg`);
+        donut.style.setProperty('--pending-angle', `${pendingAngle}deg`);
+    }
+
+    setText('legend-verified', verified);
+    setText('legend-pending', pending);
+    setText('legend-rejected', rejected);
+
+    if (label) {
+        label.textContent = `${total} ${total === 1 ? 'listing' : 'listings'}`;
+    }
+}
+
+async function getSessionUser() {
+    return checkAuth();
 }
 
 async function getUserProfile(userId) {
@@ -127,10 +157,11 @@ function updateStats(properties) {
     const pending = properties.filter((property) => property.status === 'pending').length;
     const rejected = properties.filter((property) => property.status === 'rejected').length;
 
-    setText('stat-total', total);
-    setText('stat-verified', verified);
-    setText('stat-pending', pending);
-    setText('stat-rejected', rejected);
+    setStatNumber('stat-total', total);
+    setStatNumber('stat-verified', verified);
+    setStatNumber('stat-pending', pending);
+    setStatNumber('stat-rejected', rejected);
+    updateStatusChart(total, verified, pending, rejected);
 }
 
 async function loadUserProperties(userId) {

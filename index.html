@@ -1,539 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RealVerify - Verified Real Estate</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
-    <style>
-        .home-navbar .nav-container {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .brand-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.45);
-            border-radius: 50%;
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        .home-navbar .nav-links {
-            justify-content: center;
-        }
-
-        .nav-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        .login-link {
-            color: var(--text-primary);
-            font-weight: 700;
-            transition: color 0.25s ease;
-        }
-
-        .login-link:hover,
-        .login-link:focus-visible {
-            color: var(--gold-light);
-        }
-
-        .home-hero {
-            background:
-                linear-gradient(rgba(10, 10, 10, 0.62), rgba(10, 10, 10, 0.92)),
-                radial-gradient(circle at 20% 20%, rgba(201, 168, 76, 0.22), transparent 34%),
-                radial-gradient(circle at 80% 70%, rgba(232, 201, 126, 0.12), transparent 30%),
-                var(--bg-primary);
-        }
-
-        .hero-kicker {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin-bottom: 1.25rem;
-            padding: 0.5rem 0.9rem;
-            color: var(--gold-light);
-            border: 1px solid rgba(201, 168, 76, 0.35);
-            border-radius: 999px;
-            background: rgba(201, 168, 76, 0.08);
-            font-size: 0.82rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .stats-bar {
-            padding: 2.25rem 0;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-            text-align: center;
-        }
-
-        .stat-card {
-            padding: 1.5rem;
-            border-right: 1px solid var(--border);
-        }
-
-        .stat-card:last-child {
-            border-right: 0;
-        }
-
-        .stat-number {
-            display: block;
-            color: var(--gold);
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: clamp(2rem, 4vw, 3.2rem);
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .stat-label {
-            display: block;
-            margin-top: 0.65rem;
-            color: var(--text-primary);
-            font-weight: 700;
-        }
-
-        .steps-grid,
-        .properties-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.5rem;
-        }
-
-        .step-card,
-        .property-card {
-            position: relative;
-            overflow: hidden;
-            background: linear-gradient(145deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.015));
-            border: 1px solid var(--border);
-            border-radius: 26px;
-            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
-        }
-
-        .step-card {
-            padding: 2rem;
-        }
-
-        .step-card::before,
-        .property-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            pointer-events: none;
-            background: linear-gradient(135deg, rgba(201, 168, 76, 0.14), transparent 42%);
-        }
-
-        .step-number {
-            position: absolute;
-            top: 1.25rem;
-            right: 1.5rem;
-            color: rgba(201, 168, 76, 0.2);
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 4.5rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .step-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 62px;
-            height: 62px;
-            margin-bottom: 1.5rem;
-            color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.45);
-            border-radius: 18px;
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        .step-card h3,
-        .property-card h3 {
-            margin-bottom: 0.75rem;
-            font-size: 1.5rem;
-        }
-
-        .featured-properties {
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            border-bottom: 1px solid var(--border);
-        }
-
-        .property-card {
-            padding: 1rem;
-        }
-
-        .property-image {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 230px;
-            margin-bottom: 1.25rem;
-            color: rgba(232, 201, 126, 0.8);
-            border: 1px solid rgba(201, 168, 76, 0.55);
-            border-radius: 20px;
-            background:
-                linear-gradient(135deg, rgba(201, 168, 76, 0.16), transparent 46%),
-                #080808;
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.2rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .property-body {
-            position: relative;
-            z-index: 1;
-            padding: 0 0.5rem 0.5rem;
-        }
-
-        .property-meta {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin: 1rem 0 1.25rem;
-        }
-
-        .property-location {
-            color: var(--text-secondary);
-            font-weight: 600;
-        }
-
-        .property-price {
-            color: var(--gold);
-            font-size: 1.25rem;
-            font-weight: 800;
-        }
-
-        .verified-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.38rem 0.75rem;
-            color: var(--bg-primary);
-            background: var(--gold);
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 800;
-        }
-
-        .property-card .btn-secondary {
-            width: 100%;
-            margin-top: 1rem;
-        }
-
-        .cta-section {
-            background:
-                radial-gradient(circle at 50% 20%, rgba(201, 168, 76, 0.16), transparent 36%),
-                var(--bg-primary);
-        }
-
-        .cta-box {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: clamp(2rem, 6vw, 4.5rem);
-            text-align: center;
-            border: 1px solid rgba(201, 168, 76, 0.6);
-            border-radius: 32px;
-            background: linear-gradient(145deg, rgba(201, 168, 76, 0.1), rgba(17, 17, 17, 0.98));
-            box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
-        }
-
-        .cta-box h2 {
-            margin-bottom: 1rem;
-            font-size: clamp(2rem, 5vw, 4rem);
-        }
-
-        .cta-box p {
-            max-width: 650px;
-            margin: 0 auto 2rem;
-            font-size: 1.1rem;
-        }
-
-        .footer-logo {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-column {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
-
-        @media (max-width: 768px) {
-            .home-navbar .nav-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem 0;
-            }
-
-            .home-navbar .nav-links,
-            .nav-actions {
-                justify-content: flex-start;
-            }
-
-            .stats-grid,
-            .steps-grid,
-            .properties-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .stat-card {
-                border-right: 0;
-                border-bottom: 1px solid var(--border);
-            }
-
-            .stat-card:last-child {
-                border-bottom: 0;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .home-navbar .nav-links,
-            .nav-actions {
-                width: 100%;
-            }
-
-            .nav-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .login-link {
-                text-align: center;
-            }
-
-            .home-hero {
-                padding-top: 260px;
-            }
-
-            .property-meta {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>RealVerify — Premium Verified Real Estate</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <header class="navbar home-navbar">
-        <nav class="nav-container" aria-label="Main navigation">
-            <a class="brand logo" href="index.html" aria-label="RealVerify home">
-                <span class="brand-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                RealVerify
+  <div class="page-loader" aria-hidden="true"></div>
+
+  <header class="navbar" id="navbar">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html">
+        <span class="brand-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z"/>
+            <path d="M9 12L11 14L15.5 9.5"/>
+          </svg>
+        </span>
+        <span>RealVerify</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Primary navigation">
+        <a href="#home">Home</a>
+        <a href="#stats">Trusted</a>
+        <a href="#features">Verification</a>
+        <a href="#choose">Why RealVerify</a>
+        <a href="#mobile">Mobile App</a>
+        <a href="#reviews">Reviews</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="nav-text" href="login.html">Login</a>
+        <a class="btn btn-gold magnetic" href="signup.html">Sign Up</a>
+      </div>
+
+      <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- ════════════════════════════════════════ -->
+    <!-- HERO — World-Class Luxury Real Estate    -->
+    <!-- ════════════════════════════════════════ -->
+    <section class="hero" id="home">
+      <div class="hero-bg"></div>
+      <div class="hero-grid-overlay" aria-hidden="true"></div>
+      <div class="hero-particles" aria-hidden="true"></div>
+      <div class="hero-glow" aria-hidden="true"></div>
+
+      <div class="container hero-inner">
+        <!-- ─── LEFT: Headline + CTA + Stats ─── -->
+        <div class="hero-copy">
+          <span class="hero-kicker">LUXURY REAL ESTATE • VERIFIED OWNERSHIP</span>
+          
+          <h1 class="hero-title">
+            <span class="hero-title-line">Own <span class="gold-grad">Verified</span> Property</span>
+            <span class="hero-title-sub">With <span class="gold-grad">Confidence</span></span>
+          </h1>
+          
+          <p class="hero-text">
+            Experience the world's most premium property verification platform. 
+            Every listing authenticated, every transaction secured — because 
+            luxury deserves nothing less than absolute certainty.
+          </p>
+          
+          <div class="hero-actions">
+            <a class="btn btn-gold magnetic" href="property-listing.html">
+              Explore Properties
+              <span class="shine-arrow" aria-hidden="true">→</span>
             </a>
+            <a class="btn btn-outline magnetic btn-app" href="#">
+              <span class="btn-app-icon" aria-hidden="true">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+              </span>
+              Download App
+            </a>
+          </div>
 
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
+          <!-- Trust Statistics -->
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <span class="hero-stat-number hero-stat-reveal" data-count-to="10000" data-count-suffix="+" data-count-prefix="">0</span>
+              <span class="hero-stat-label">Verified Listings</span>
             </div>
-
-            <div class="nav-actions">
-                <a class="login-link" href="login.html">Login</a>
-                <a class="nav-signup" href="signup.html">Sign Up</a>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat">
+              <span class="hero-stat-number hero-stat-reveal" data-count-to="99" data-count-suffix=".9%">0</span>
+              <span class="hero-stat-label">Fraud Detection</span>
             </div>
-        </nav>
-    </header>
-
-    <main>
-        <section class="hero home-hero" id="home">
-            <div class="hero-content">
-                <span class="hero-kicker">Fraud-Free Property Deals</span>
-                <h1>Verify Before You Buy</h1>
-                <p>The only real estate platform where every listing is verified and fraud-free</p>
-                <div class="hero-actions">
-                    <a class="btn-primary" href="property-listing.html">Browse Properties</a>
-                    <a class="btn-secondary" href="signup.html">List Your Property</a>
-                </div>
+            <div class="hero-stat-divider" aria-hidden="true"></div>
+            <div class="hero-stat">
+              <span class="hero-stat-number hero-stat-reveal" data-count-to="50000" data-count-suffix="+" data-count-prefix="">0</span>
+              <span class="hero-stat-label">Trusted Users</span>
             </div>
-        </section>
-
-        <section class="stats-bar" aria-label="RealVerify platform statistics">
-            <div class="container stats-grid">
-                <div class="stat-card">
-                    <span class="stat-number">1,200+</span>
-                    <span class="stat-label">Verified Properties</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">98%</span>
-                    <span class="stat-label">Fraud Detection Rate</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">5,000+</span>
-                    <span class="stat-label">Happy Users</span>
-                </div>
-            </div>
-        </section>
-
-        <section id="how-it-works">
-            <div class="container">
-                <h2 class="section-title">How It Works</h2>
-                <div class="steps-grid">
-                    <article class="step-card">
-                        <span class="step-number">01</span>
-                        <span class="step-icon" aria-hidden="true">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 16V4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                                <path d="M7.5 8.5L12 4L16.5 8.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M5 14V18C5 19.1 5.9 20 7 20H17C18.1 20 19 19.1 19 18V14" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
-                            </svg>
-                        </span>
-                        <h3>Upload Your Property</h3>
-                        <p>Submit your property details, ownership documents, photos, and location information through our secure listing process.</p>
-                    </article>
-
-                    <article class="step-card">
-                        <span class="step-number">02</span>
-                        <span class="step-icon" aria-hidden="true">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                                <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                        <h3>We Verify Documents</h3>
-                        <p>Our verification team checks ownership, identity, title records, and risk signals before a listing is approved.</p>
-                    </article>
-
-                    <article class="step-card">
-                        <span class="step-number">03</span>
-                        <span class="step-icon" aria-hidden="true">
-                            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </span>
-                        <h3>Buy or Sell Safely</h3>
-                        <p>Move forward with confidence using verified listings, trusted sellers, and transparent property information.</p>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="featured-properties">
-            <div class="container">
-                <h2 class="section-title">Featured Verified Properties</h2>
-                <div class="properties-grid">
-                    <article class="property-card">
-                        <div class="property-image">Verified Home</div>
-                        <div class="property-body">
-                            <span class="verified-badge">Verified</span>
-                            <h3>Victoria Island Penthouse</h3>
-                            <div class="property-meta">
-                                <span class="property-location">Lagos</span>
-                                <span class="property-price">₦320M</span>
-                            </div>
-                            <a class="btn-secondary" href="property-listing.html">View Details</a>
-                        </div>
-                    </article>
-
-                    <article class="property-card">
-                        <div class="property-image">Verified Villa</div>
-                        <div class="property-body">
-                            <span class="verified-badge">Verified</span>
-                            <h3>Maitama Executive Villa</h3>
-                            <div class="property-meta">
-                                <span class="property-location">Abuja</span>
-                                <span class="property-price">₦450M</span>
-                            </div>
-                            <a class="btn-secondary" href="property-listing.html">View Details</a>
-                        </div>
-                    </article>
-
-                    <article class="property-card">
-                        <div class="property-image">Verified Estate</div>
-                        <div class="property-body">
-                            <span class="verified-badge">Verified</span>
-                            <h3>GRA Waterfront Duplex</h3>
-                            <div class="property-meta">
-                                <span class="property-location">Port Harcourt</span>
-                                <span class="property-price">₦210M</span>
-                            </div>
-                            <a class="btn-secondary" href="property-listing.html">View Details</a>
-                        </div>
-                    </article>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section">
-            <div class="container">
-                <div class="cta-box">
-                    <h2>Ready to Buy or Sell with Confidence?</h2>
-                    <p>RealVerify protects buyers, sellers, and agents with document verification, fraud screening, and trusted property intelligence.</p>
-                    <a class="btn-primary" href="signup.html">Get Started Today</a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer class="footer">
-        <div class="container footer-grid">
-            <div>
-                <a class="footer-logo logo" href="index.html">
-                    <span class="brand-icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                            <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    RealVerify
-                </a>
-                <p>Verified real estate for safer property decisions across Nigeria.</p>
-            </div>
-
-            <div class="footer-column">
-                <h4>Quick Links</h4>
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-                <a href="#how-it-works">How It Works</a>
-                <a href="signup.html">Sign Up</a>
-            </div>
-
-            <div class="footer-column">
-                <h4>Contact</h4>
-                <a href="mailto:hello@realverify.ng">hello@realverify.ng</a>
-                <a href="tel:+2348000000000">+234 800 000 0000</a>
-                <p>Lagos, Nigeria</p>
-            </div>
+          </div>
         </div>
-        <div class="container footer-bottom">
-            <p>&copy; 2025 RealVerify. All rights reserved.</p>
-        </div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="js/supabase.js"></script>
+        <!-- ─── RIGHT: Luxury Visual Composition ─── -->
+        <div class="hero-visual" id="heroVisual">
+          
+          <!-- Luxury Villa / Bungalow SVG Illustration -->
+          <div class="luxury-villa" id="luxuryVilla">
+            <svg class="villa-svg" viewBox="0 0 600 480" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <!-- Sky gradient -->
+              <defs>
+                <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1a1a2e"/>
+                  <stop offset="60%" stop-color="#16213e"/>
+                  <stop offset="100%" stop-color="#0f3460"/>
+                </linearGradient>
+                <linearGradient id="poolGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#1a5276"/>
+                  <stop offset="50%" stop-color="#2980b9"/>
+                  <stop offset="100%" stop-color="#1a5276"/>
+                </linearGradient>
+                <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="rgba(212,175,55,0.3)"/>
+                  <stop offset="50%" stop-color="rgba(255,255,255,0.08)"/>
+                  <stop offset="100%" stop-color="rgba(212,175,55,0.15)"/>
+                </linearGradient>
+                <radialGradient id="villaGlow" cx="0.5" cy="0.5" r="0.5">
+                  <stop offset="0%" stop-color="rgba(212,175,55,0.25)"/>
+                  <stop offset="100%" stop-color="rgba(212,175,55,0)"/>
+                </radialGradient>
+                <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#2c2c3a"/>
+                  <stop offset="100%" stop-color="#1e1e2a"/>
+                </linearGradient>
+                <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0%" stop-color="#3a3a4e"/>
+                  <stop offset="100%" stop-color="#2a2a3e"/>
+                </linearGradient>
+              </defs>
+              
+              <!-- Ground -->
+              <rect x="0" y="400" width="600" height="80" fill="#0a0a12"/>
+              <rect x="0" y="400" width="600" height="2" fill="rgba(212,175,55,0.08)"/>
+              
+              <!-- Swimming Pool -->
+              <rect x="180" y="370" width="240" height="55" rx="27" fill="url(#poolGrad)" opacity="0.6"/>
+              <rect x="180" y="370" width="240" height="55" rx="27" fill="none" stroke="rgba(212,175,55,0.15)" stroke-width="1.5"/>
+              <!-- Pool light reflections -->
+              <ellipse cx="300" cy="397" rx="60" ry="8" fill="rgba(255,255,255,0.06)"/>
+              <ellipse cx="260" cy="393" rx="20" ry="4" fill="rgba(255,255,255,0.08)"/>
+              
+              <!-- Villa Main Body -->
+              <rect x="200" y="200" width="200" height="200" rx="4" fill="url(#wallGrad)"/>
+              <rect x="200" y="200" width="200" height="200" rx="4" fill="none" stroke="rgba(212,175,55,0.12)" stroke-width="1"/>
+              
+              <!-- Villa Left Wing -->
+              <rect x="150" y="240" width="50" height="160" rx="4" fill="url(#wallGrad)"/>
+              <rect x="150" y="240" width="50" height="160" rx="4" fill="none" stroke="rgba(212,175,55,0.1)" stroke-width="1"/>
+              
+              <!-- Villa Right Wing -->
+              <rect x="400" y="240" width="50" height="160" rx="4" fill="url(#wallGrad)"/>
+              <rect x="400" y="240" width="50" height="160" rx="4" fill="none" stroke="rgba(212,175,55,0.1)" stroke-width="1"/>
+              
+              <!-- Roof -->
+              <polygon points="185,200 300,150 415,200" fill="url(#roofGrad)" stroke="rgba(212,175,55,0.15)" stroke-width="1"/>
+              <line x1="300" y1="150" x2="300" y2="175" stroke="rgba(212,175,55,0.2)" stroke-width="1.5"/>
+              
+              <!-- Roof Left Wing -->
+              <polygon points="145,240 175,210 205,240" fill="url(#roofGrad)" stroke="rgba(212,175,55,0.1)" stroke-width="1"/>
+              
+              <!-- Roof Right Wing -->
+              <polygon points="395,240 425,210 455,240" fill="url(#roofGrad)" stroke="rgba(212,175,55,0.1)" stroke-width="1"/>
+              
+              <!-- Large Glass Windows - Main -->
+              <rect x="225" y="230" width="55" height="70" rx="2" fill="url(#glassGrad)" stroke="rgba(212,175,55,0.2)" stroke-width="1"/>
+              <line x1="252" y1="230" x2="252" y2="300" stroke="rgba(212,175,55,0.15)" stroke-width="0.5"/>
+              <line x1="225" y1="265" x2="280" y2="265" stroke="rgba(212,175,55,0.15)" stroke-width="0.5"/>
+              <!-- Window glow -->
+              <rect x="230" y="235" width="10" height="10" rx="1" fill="rgba(255,255,255,0.15)"/>
+              <rect x="245" y="235" width="10" height="10" rx="1" fill="rgba(255,255,255,0.1)"/>
+              
+              <!-- Large Glass Windows - Right -->
+              <rect x="320" y="230" width="55" height="70" rx="2" fill="url(#glassGrad)" stroke="rgba(212,175,55,0.2)" stroke-width="1"/>
+              <line x1="347" y1="230" x2="347" y2="300" stroke="rgba(212,175,55,0.15)" stroke-width="0.5"/>
+              <line x1="320" y1="265" x2="375" y2="265" stroke="rgba(212,175,55,0.15)" stroke-width="0.5"/>
+              <rect x="325" y="235" width="10" height="10" rx="1" fill="rgba(255,255,255,0.12)"/>
+              
+              <!-- Entrance Door -->
+              <rect x="280" y="310" width="40" height="90" rx="2" fill="#1a1a28" stroke="rgba(212,175,55,0.2)" stroke-width="1"/>
+              <circle cx="310" cy="360" r="3" fill="#d4af37" opacity="0.8"/>
+              <rect x="282" y="312" width="36" height="86" rx="1" fill="none" stroke="rgba(212,175,55,0.08)" stroke-width="0.5"/>
+              
+              <!-- Windows - Left wing -->
+              <rect x="158" y="260" width="34" height="40" rx="2" fill="url(#glassGrad)" stroke="rgba(212,175,55,0.15)" stroke-width="0.8"/>
+              <line x1="175" y1="260" x2="175" y2="300" stroke="rgba(212,175,55,0.1)" stroke-width="0.5"/>
+              
+              <!-- Windows - Right wing -->
+              <rect x="408" y="260" width="34" height="40" rx="2" fill="url(#glassGrad)" stroke="rgba(212,175,55,0.15)" stroke-width="0.8"/>
+              <line x1="425" y1="260" x2="425" y2="300" stroke="rgba(212,175,55,0.1)" stroke-width="0.5"/>
+              
+              <!-- Second floor windows -->
+              <rect x="250" y="195" width="30" height="30" rx="2" fill="url(#glassGrad)" stroke="rgba(212,175,55,0.15)" stroke-width="0.8"/>
+              <rect x="320" y="195" width="30" height="30" rx="2" fill="url(#glassGrad)" stroke="rgba(212,175,55,0.15)" stroke-width="0.8"/>
+              
+              <!-- Palm Tree Left -->
+              <line x1="120" y1="400" x2="115" y2="300" stroke="#2a2a1a" stroke-width="3"/>
+              <path d="M115 300 Q95 280 80 290" stroke="#1a4a1a" stroke-width="2.5" fill="none"/>
+              <path d="M115 300 Q130 275 145 285" stroke="#1a5a1a" stroke-width="2.5" fill="none"/>
+              <path d="M115 300 Q110 270 100 265" stroke="#2a5a2a" stroke-width="2" fill="none"/>
+              <path d="M115 300 Q125 268 135 270" stroke="#1a4a1a" stroke-width="2" fill="none"/>
+              <path d="M115 300 Q115 268 115 260" stroke="#2a5a2a" stroke-width="2" fill="none"/>
+              
+              <!-- Palm Tree Right -->
+              <line x1="490" y1="400" x2="495" y2="310" stroke="#2a2a1a" stroke-width="3"/>
+              <path d="M495 310 Q475 290 460 300" stroke="#1a4a1a" stroke-width="2.5" fill="none"/>
+              <path d="M495 310 Q510 285 525 295" stroke="#1a5a1a" stroke-width="2.5" fill="none"/>
+              <path d="M495 310 Q490 280 480 275" stroke="#2a5a2a" stroke-width="2" fill="none"/>
+              <path d="M495 310 Q505 278 515 280" stroke="#1a4a1a" stroke-width="2" fill="none"/>
+              <path d="M495 310 Q495 278 495 270" stroke="#2a5a2a" stroke-width="2" fill="none"/>
+              
+              <!-- Gold accent lines on villa -->
+              <line x1="200" y1="200" x2="400" y2="200" stroke="rgba(212,175,55,0.08)" stroke-width="0.5"/>
+              <rect x="215" y="340" width="170" height="60" rx="2" fill="none" stroke="rgba(212,175,55,0.06)" stroke-width="0.5"/>
+              
+              <!-- Villa glow effect -->
+              <ellipse cx="300" cy="280" rx="140" ry="120" fill="url(#villaGlow)" opacity="0.3"/>
+              
+              <!-- Pool deck -->
+              <rect x="170" y="362" width="260" height="8" rx="4" fill="#1a1a24" stroke="rgba(212,175,55,0.08)" stroke-width="0.5"/>
+              
+              <!-- Stars -->
+              <circle cx="50" cy="30" r="1" fill="rgba(255,255,255,0.3)"/>
+              <circle cx="150" cy="50" r="0.8" fill="rgba(255,255,255,0.2)"/>
+              <circle cx="420" cy="35" r="1" fill="rgba(255,255,255,0.25)"/>
+              <circle cx="520" cy="60" r="0.8" fill="rgba(255,255,255,0.2)"/>
+              <circle cx="80" cy="80" r="0.6" fill="rgba(255,255,255,0.15)"/>
+              <circle cx="550" cy="25" r="0.7" fill="rgba(255,255,255,0.2)"/>
+              <circle cx="300" cy="20" r="1" fill="rgba(212,175,55,0.3)"/>
+            </svg>
+          </div>
+
+          <!-- Floating Phone Mockup in front of villa -->
+          <div class="hero-phone" id="heroPhone">
+            <div class="hero-phone-frame">
+              <div class="hero-phone-notch" aria-hidden="true"></div>
+              <div class="hero-phone-screen">
+                <div class="hp-status-bar">
+                  <span>9:41</span>
+                  <span class="hp-icons" aria-hidden="true">
+                    <svg width="12" height="10" viewBox="0 0 14 10"><rect x="0" y="6" width="2" height="4" rx="0.5" fill="currentColor"/><rect x="3" y="4" width="2" height="6" rx="0.5" fill="currentColor"/><rect x="6" y="2" width="2" height="8" rx="0.5" fill="currentColor"/><rect x="9" y="0" width="2" height="10" rx="0.5" fill="currentColor"/></svg>
+                  </span>
+                </div>
+                <div class="hp-header">
+                  <span class="hp-brand">RealVerify</span>
+                  <span class="hp-verified-badge">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="2.2"><path d="M9 12L11 14L15.5 9.5"/></svg>
+                    Verified
+                  </span>
+                </div>
+                <div class="hp-listings">
+                  <div class="hp-listing">
+                    <div class="hp-listing-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21"/></svg>
+                    </div>
+                    <div>
+                      <div class="hp-listing-title">Maitama Villa</div>
+                      <div class="hp-listing-sub">₦85M • Verified</div>
+                    </div>
+                  </div>
+                  <div class="hp-listing">
+                    <div class="hp-listing-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21"/></svg>
+                    </div>
+                    <div>
+                      <div class="hp-listing-title">VI Penthouse</div>
+                      <div class="hp-listing-sub">₦120M • Verified</div>
+                    </div>
+                  </div>
+                  <div class="hp-listing">
+                    <div class="hp-listing-icon hp-land-icon">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="#D4AF37" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/></svg>
+                    </div>
+                    <div>
+                      <div class="hp-listing-title">GRA Plot</div>
+                      <div class="hp-listing-sub">₦18.5M • Land</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="hp-footer">
+                  <span>🏡 Home</span>
+                  <span>🔍 Search</span>
+                  <span>✅ Verify</span>
+                  <span>👤 Profile</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Floating Verification Cards -->
+          <div class="float-card float-card-1" id="floatCard1">
+            <span class="float-card-icon">✓</span>
+            <div class="float-card-content">
+              <span class="float-card-title">Ownership Verified</span>
+              <span class="float-card-sub">Document confirmed</span>
+            </div>
+          </div>
+
+          <div class="float-card float-card-2" id="floatCard2">
+            <span class="float-card-icon">📍</span>
+            <div class="float-card-content">
+              <span class="float-card-title">Prime Location</span>
+              <span class="float-card-sub">Premium zone</span>
+            </div>
+          </div>
+
+          <div class="float-card float-card-3" id="floatCard3">
+            <span class="float-card-icon">🛡</span>
+            <div class="float-card-content">
+              <span class="float-card-title">Fraud Checked</span>
+              <span class="float-card-sub">Risk: 0.01%</span>
+            </div>
+          </div>
+
+          <div class="float-card float-card-4" id="floatCard4">
+            <span class="float-card-icon">📄</span>
+            <div class="float-card-content">
+              <span class="float-card-title">Certificate Verified</span>
+              <span class="float-card-sub">C of O confirmed</span>
+            </div>
+          </div>
+
+          <!-- Gold Particles -->
+          <div class="gold-particles" aria-hidden="true">
+            <span class="gp gp-1"></span>
+            <span class="gp gp-2"></span>
+            <span class="gp gp-3"></span>
+            <span class="gp gp-4"></span>
+            <span class="gp gp-5"></span>
+            <span class="gp gp-6"></span>
+            <span class="gp gp-7"></span>
+            <span class="gp gp-8"></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRUSTED STATISTICS -->
+    <section class="stats-row" id="stats">
+      <div class="container stats-grid reveal-up">
+        <article class="stat-card glass-card">
+          <span class="stat-number" data-count-to="1200" data-count-suffix="+" data-count-prefix="1,">0</span>
+          <span class="stat-label">Verified Properties</span>
+        </article>
+        <article class="stat-card glass-card">
+          <span class="stat-number" data-count-to="98" data-count-suffix="%">0</span>
+          <span class="stat-label">Fraud Detection Signal</span>
+        </article>
+        <article class="stat-card glass-card">
+          <span class="stat-number" data-count-to="5000" data-count-suffix="+">0</span>
+          <span class="stat-label">Happy Users</span>
+        </article>
+      </div>
+    </section>
+
+    <!-- PROPERTY VERIFICATION FEATURES -->
+    <section class="features-section" id="features">
+      <div class="container section-heading reveal-up">
+        <span class="section-kicker">Property Verification Features</span>
+        <h2>Luxury security for every listing.</h2>
+        <p>
+          From ownership signals to fraud intelligence, RealVerify turns property due diligence into a premium experience.
+        </p>
+      </div>
+
+      <div class="container feature-grid">
+        <article class="feature-card glass-card reveal-up">
+          <div class="fc-top">Verified Ownership</div>
+          <h3>Trust signals you can see</h3>
+          <p>Badge-driven verification indicators that help buyers move with clarity and confidence.</p>
+        </article>
+        <article class="feature-card glass-card reveal-up" data-reveal-delay="60">
+          <div class="fc-top">Fraud Intelligence</div>
+          <h3>Risk-scored verification</h3>
+          <p>Security verification badges with fraud risk screening for safer real estate decisions.</p>
+        </article>
+        <article class="feature-card glass-card reveal-up" data-reveal-delay="120">
+          <div class="fc-top">Location Pins</div>
+          <h3>Context-aware trust</h3>
+          <p>Cinematic, map-like trust visuals with zone confidence and verification coverage.</p>
+        </article>
+        <article class="feature-card glass-card reveal-up" data-reveal-delay="180">
+          <div class="fc-top">Secure Documentation</div>
+          <h3>Premium due diligence</h3>
+          <p>Structured checks for property details—so the verified badge means something real.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- WHY CHOOSE -->
+    <section class="choose-section" id="choose">
+      <div class="container choose-inner">
+        <div class="choose-copy reveal-left">
+          <span class="section-kicker">Why choose RealVerify</span>
+          <h2>Technology-grade verification, built for luxury buyers.</h2>
+          <p>
+            We combine real estate discovery with security verification to reduce risk and increase confidence—without adding friction.
+          </p>
+
+          <div class="choose-bullets">
+            <div class="bullet"><span class="bullet-ic">✦</span> Glassmorphism trust UI</div>
+            <div class="bullet"><span class="bullet-ic">✔</span> Verified property signals</div>
+            <div class="bullet"><span class="bullet-ic">★</span> Fraud intelligence & security badges</div>
+          </div>
+
+          <div class="choose-actions">
+            <a class="btn btn-gold magnetic" href="signup.html">Get verified access</a>
+            <a class="btn btn-outline magnetic" href="#reviews">See customer reviews</a>
+          </div>
+        </div>
+
+        <div class="choose-panel glass-card reveal-right">
+          <div class="panel-title">Verification Dashboard Preview</div>
+          <div class="panel-rows">
+            <div class="panel-row">
+              <span class="panel-dot gold" aria-hidden="true"></span>
+              Document checks: <strong>Verified</strong>
+            </div>
+            <div class="panel-row">
+              <span class="panel-dot gold" aria-hidden="true"></span>
+              Ownership signals: <strong>Trusted</strong>
+            </div>
+            <div class="panel-row">
+              <span class="panel-dot gold" aria-hidden="true"></span>
+              Security verification: <strong>Active</strong>
+            </div>
+            <div class="panel-row">
+              <span class="panel-dot gold" aria-hidden="true"></span>
+              Fraud risk: <strong>Screened</strong>
+            </div>
+          </div>
+          <div class="panel-cta">
+            <div class="pulse-dot" aria-hidden="true"></div>
+            Premium trust, instantly visible.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOBILE APP SHOWCASE -->
+    <section class="mobile-section" id="mobile">
+      <div class="container section-heading reveal-up">
+        <span class="section-kicker">Mobile App Showcase</span>
+        <h2>Verified properties on your phone—cinematically.</h2>
+        <p>Designed for quick, secure decision-making with premium badges and location trust pins.</p>
+      </div>
+
+      <div class="container mobile-grid">
+        <div class="mobile-shot glass-card reveal-left">
+          <div class="shot-title">RealVerify Mobile</div>
+          <div class="shot-badges">
+            <span class="sb-pill">Verified</span>
+            <span class="sb-pill pulse">Security</span>
+            <span class="sb-pill">Trust</span>
+          </div>
+          <div class="shot-lines">
+            <div class="shot-line"></div>
+            <div class="shot-line w-80"></div>
+            <div class="shot-line w-65"></div>
+            <div class="shot-line w-90"></div>
+          </div>
+          <div class="shot-map">
+            <div class="mini-pin"></div>
+            <div class="mini-pin p2"></div>
+            <div class="mini-pin p3"></div>
+            <div class="shot-map-label">Verified zone coverage</div>
+          </div>
+        </div>
+
+        <div class="mobile-copy reveal-right">
+          <h3>Built for speed, not uncertainty.</h3>
+          <p>
+            Your property due diligence, delivered as secure signals. No noise—just verification and confidence.
+          </p>
+          <ul class="checklist">
+            <li><span class="check">✓</span> Trusted verification badges</li>
+            <li><span class="check">✓</span> Fraud risk screening indicators</li>
+            <li><span class="check">✓</span> Location pins & trusted zones</li>
+          </ul>
+          <div class="mobile-actions">
+            <a class="btn btn-gold magnetic" href="#cta">Request demo</a>
+            <a class="btn btn-outline magnetic" href="property-listing.html">Explore listings</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CUSTOMER TESTIMONIALS -->
+    <section class="testimonials" id="reviews">
+      <div class="container section-heading reveal-up">
+        <span class="section-kicker">Customer Testimonials</span>
+        <h2>Trusted experiences from serious buyers.</h2>
+        <p>Premium verification that helps buyers feel secure—before any commitment.</p>
+      </div>
+
+      <div class="container testimonial-wrap reveal-up">
+        <div class="testimonial-carousel" aria-label="Testimonials carousel">
+          <div class="testimonial-track">
+            <article class="testimonial-card active glass-card">
+              <div class="avatar">YA</div>
+              <div class="rating">★★★★★</div>
+              <p>RealVerify helped me feel safe buying a luxury Lagos apartment. The verified badge gave buyers immediate confidence.</p>
+              <strong>Yaounde Akintola</strong>
+              <span>Limbe, Cameroon</span>
+            </article>
+            <article class="testimonial-card glass-card">
+              <div class="avatar">NI</div>
+              <div class="rating">★★★★★</div>
+              <p>The fraud checks saved us from a risky Abuja deal. The platform feels premium and reliable for discerning buyers.</p>
+              <strong>Nkechi Ibrahim</strong>
+              <span>Yaoundé, Cameroon</span>
+            </article>
+            <article class="testimonial-card glass-card">
+              <div class="avatar">CE</div>
+              <div class="rating">★★★★★</div>
+              <p>Verified documentation and ownership validation gave me the confidence to proceed with a Port Harcourt listing.</p>
+              <strong>Claude Essien</strong>
+              <span>Buea, Cameroon</span>
+            </article>
+          </div>
+        </div>
+
+        <div class="testimonial-dots" id="testimonialDots">
+          <button class="testimonial-dot active" data-index="0" aria-label="Show testimonial 1"></button>
+          <button class="testimonial-dot" data-index="1" aria-label="Show testimonial 2"></button>
+          <button class="testimonial-dot" data-index="2" aria-label="Show testimonial 3"></button>
+        </div>
+      </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="cta-section" id="cta">
+      <div class="container cta-inner glass-card reveal-up">
+        <div class="cta-copy">
+          <span class="section-kicker">Call To Action</span>
+          <h2>Make your next move with verification you can feel.</h2>
+          <p>Secure property confidence. Premium security badges. Verified listings.</p>
+        </div>
+        <div class="cta-actions">
+          <a class="btn btn-gold magnetic" href="signup.html">Start verifying</a>
+          <a class="btn btn-outline magnetic" href="property-listing.html">Browse verified homes</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div class="footer-col footer-brand-col">
+        <a href="index.html" class="footer-logo">
+          <span class="brand-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z"/>
+              <path d="M9 12L11 14L15.5 9.5"/>
+            </svg>
+          </span>
+          RealVerify
+        </a>
+        <p>Premium verified real estate for secure property decisions across Cameroon and beyond.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <a href="#home">Home</a>
+        <a href="#features">Verification</a>
+        <a href="#choose">Why RealVerify</a>
+        <a href="#reviews">Reviews</a>
+      </div>
+
+      <div class="footer-col">
+        <h4>Contact</h4>
+        <a href="mailto:hello@realverify.ng">hello@realverify.ng</a>
+        <a href="tel:+2348000000000">+234 800 000 0000</a>
+        <p>Lagos, Nigeria</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Social</h4>
+        <div class="social-links">
+          <a href="#" aria-label="Facebook">Facebook</a>
+          <a href="#" aria-label="Twitter">Twitter</a>
+          <a href="#" aria-label="Instagram">Instagram</a>
+          <a href="#" aria-label="WhatsApp">WhatsApp</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container footer-bottom">
+      <p>© 2026 RealVerify. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
+
+  
+
+  <script src="js/app.js"></script>
 </body>
 </html>
+

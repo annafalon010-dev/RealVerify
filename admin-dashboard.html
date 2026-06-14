@@ -6,585 +6,82 @@
     <title>RealVerify - Admin Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
-    <style>
-        [hidden] {
-            display: none !important;
-        }
-
-        body {
-            background: var(--bg-primary);
-        }
-
-        .admin-navbar .nav-container {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            gap: 2rem;
-        }
-
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-        }
-
-        .brand-icon {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 42px;
-            height: 42px;
-            color: var(--gold);
-            border: 1px solid rgba(201, 168, 76, 0.45);
-            border-radius: 50%;
-            background: rgba(201, 168, 76, 0.08);
-        }
-
-        .admin-panel-label {
-            justify-self: center;
-            color: var(--gold);
-            font-size: 0.9rem;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-        }
-
-        .admin-nav-actions {
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            gap: 1rem;
-        }
-
-        .view-site-link {
-            color: var(--text-primary);
-            font-weight: 700;
-            transition: color 0.25s ease;
-        }
-
-        .view-site-link:hover,
-        .view-site-link:focus-visible {
-            color: var(--gold-light);
-        }
-
-        .signout-btn,
-        .sidebar-signout {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            padding: 0.75rem 1.2rem;
-            color: var(--bg-primary);
-            background: var(--gold);
-            border: 1px solid var(--gold);
-            border-radius: 999px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
-        }
-
-        .signout-btn:hover,
-        .signout-btn:focus-visible,
-        .sidebar-signout:hover,
-        .sidebar-signout:focus-visible {
-            background: var(--gold-light);
-            border-color: var(--gold-light);
-            transform: translateY(-2px);
-        }
-
-        .dashboard-wrapper {
-            display: grid;
-            grid-template-columns: 290px minmax(0, 1fr);
-            min-height: 100vh;
-            padding-top: 78px;
-        }
-
-        .sidebar {
-            position: sticky;
-            top: 78px;
-            height: calc(100vh - 78px);
-            display: flex;
-            flex-direction: column;
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border-right: 1px solid var(--border);
-        }
-
-        .sidebar-logo {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            margin-bottom: 0.5rem;
-            color: var(--gold);
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.45rem;
-            font-weight: 800;
-        }
-
-        .sidebar-subtext {
-            margin-bottom: 2rem;
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .sidebar-nav {
-            display: flex;
-            flex-direction: column;
-            gap: 0.45rem;
-        }
-
-        .sidebar-link {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            padding: 0.9rem 1rem;
-            color: var(--text-secondary);
-            border-left: 3px solid transparent;
-            border-radius: 0 12px 12px 0;
-            font-weight: 800;
-            transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
-        }
-
-        .sidebar-link:hover,
-        .sidebar-link:focus-visible,
-        .sidebar-link.active {
-            color: var(--gold);
-            background: rgba(201, 168, 76, 0.08);
-            border-left-color: var(--gold);
-        }
-
-        .sidebar-footer {
-            margin-top: auto;
-            padding-top: 2rem;
-        }
-
-        .sidebar-signout {
-            width: 100%;
-        }
-
-        .dashboard-main {
-            min-width: 0;
-            padding: 2.5rem;
-        }
-
-        .admin-section {
-            display: block;
-        }
-
-        .section-header {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-        }
-
-        .section-header h1,
-        .section-header h2 {
-            margin-bottom: 0.5rem;
-            font-size: clamp(2rem, 4vw, 3.4rem);
-        }
-
-        .section-header p {
-            color: var(--text-secondary);
-        }
-
-        .refresh-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 42px;
-            padding: 0.7rem 1rem;
-            color: var(--gold);
-            background: transparent;
-            border: 1px solid var(--gold);
-            border-radius: 999px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: background 0.25s ease, color 0.25s ease, transform 0.25s ease;
-        }
-
-        .refresh-btn:hover,
-        .refresh-btn:focus-visible {
-            color: var(--bg-primary);
-            background: var(--gold);
-            transform: translateY(-2px);
-        }
-
-        .admin-stats-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
-        }
-
-        .admin-stat-card {
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.24);
-        }
-
-        .admin-stat-number {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--gold);
-            font-family: 'Playfair Display', Georgia, serif;
-            font-size: 2.8rem;
-            font-weight: 800;
-            line-height: 1;
-        }
-
-        .admin-stat-label {
-            color: var(--text-secondary);
-            font-weight: 800;
-        }
-
-        .admin-panel-card {
-            overflow: auto;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border);
-            border-radius: 18px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.24);
-        }
-
-        .admin-loading,
-        .admin-empty-state {
-            padding: 2rem;
-            color: var(--text-secondary);
-            font-weight: 700;
-            text-align: center;
-        }
-
-        .admin-table {
-            width: 100%;
-            border-collapse: collapse;
-            color: var(--text-primary);
-            min-width: 760px;
-        }
-
-        .admin-table th,
-        .admin-table td {
-            padding: 1rem;
-            border-bottom: 1px solid var(--border);
-            text-align: left;
-            vertical-align: top;
-        }
-
-        .admin-table th {
-            color: var(--gold);
-            font-size: 0.82rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .admin-table a {
-            color: var(--gold-light);
-            font-weight: 800;
-        }
-
-        .admin-action-btn {
-            min-height: 34px;
-            margin: 0.15rem;
-            padding: 0.45rem 0.75rem;
-            border-radius: 999px;
-            font-weight: 800;
-            cursor: pointer;
-        }
-
-        .approve-btn {
-            color: var(--bg-primary);
-            background: var(--gold);
-            border: 1px solid var(--gold);
-        }
-
-        .reject-btn,
-        .dismiss-btn {
-            color: #ff6b6b;
-            background: transparent;
-            border: 1px solid #8b1d1d;
-        }
-
-        .fraud-alert-card {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 1rem;
-            margin: 1rem;
-            padding: 1rem;
-            background: #151515;
-            border: 1px solid var(--border);
-            border-left: 4px solid #8b1d1d;
-            border-radius: 14px;
-        }
-
-        .fraud-alert-card h4 {
-            margin-bottom: 0.45rem;
-            color: var(--text-primary);
-        }
-
-        .fraud-alert-card p {
-            margin-bottom: 0.25rem;
-        }
-
-        .spam-warning {
-            border-left-color: var(--gold);
-        }
-
-        .role-badge {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.35rem 0.7rem;
-            border-radius: 999px;
-            font-size: 0.78rem;
-            font-weight: 800;
-        }
-
-        .role-admin {
-            color: var(--bg-primary);
-            background: var(--gold);
-        }
-
-        .role-user {
-            color: var(--text-primary);
-            background: #444444;
-        }
-
-        .admin-footer {
-            padding: 1.5rem;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border);
-            color: var(--text-secondary);
-            text-align: center;
-        }
-
-        @media (max-width: 980px) {
-            .dashboard-wrapper {
-                grid-template-columns: 1fr;
-            }
-
-            .sidebar {
-                position: static;
-                height: auto;
-            }
-
-            .sidebar-nav {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-            }
-
-            .admin-stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .admin-navbar .nav-container {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                padding: 1rem 0;
-            }
-
-            .admin-panel-label {
-                justify-self: start;
-            }
-
-            .admin-nav-actions {
-                justify-content: flex-start;
-            }
-
-            .dashboard-wrapper {
-                padding-top: 220px;
-            }
-
-            .dashboard-main {
-                padding: 1.5rem;
-            }
-
-            .section-header {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 560px) {
-            .admin-nav-actions,
-            .sidebar-nav {
-                grid-template-columns: 1fr;
-                width: 100%;
-            }
-
-            .admin-nav-actions {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .dashboard-wrapper {
-                padding-top: 300px;
-            }
-
-            .admin-stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .fraud-alert-card {
-                flex-direction: column;
-            }
-        }
-    </style>
 </head>
 <body>
+    <div class="page-loader" aria-hidden="true"><div class="loader-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+
     <header class="navbar admin-navbar">
         <nav class="nav-container" aria-label="Admin navigation">
-            <a class="brand logo" href="index.html" aria-label="RealVerify home">
-                <span class="brand-icon" aria-hidden="true">
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                        <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                </span>
-                RealVerify
-            </a>
-
-            <div class="nav-links">
-                <a href="index.html">Home</a>
-                <a href="property-listing.html">Properties</a>
-            </div>
-
-            <div class="admin-nav-actions">
-                <a class="view-site-link" href="dashboard.html">My Dashboard</a>
-                <button class="signout-btn" id="admin-nav-signout-btn" type="button">Sign Out</button>
-            </div>
+            <a class="brand logo" href="index.html" aria-label="RealVerify home"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a>
+            <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+            <div class="nav-menu"><div class="nav-links"><a href="index.html">Home</a><a href="property-listing.html">Properties</a></div><div class="admin-nav-actions"><a class="view-site-link" href="dashboard.html">My Dashboard</a><button class="signout-btn" id="admin-nav-signout-btn" type="button">Sign Out</button></div></div>
         </nav>
     </header>
 
     <div class="dashboard-wrapper">
         <aside class="sidebar" aria-label="Admin sidebar">
-            <div>
-                <div class="sidebar-logo">
-                    <span class="brand-icon" aria-hidden="true">
-                        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/>
-                            <path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </span>
-                    Admin Panel
-                </div>
-                <p class="sidebar-subtext">RealVerify Management</p>
+            <div class="sidebar-header">
+                <button class="sidebar-toggle" type="button" aria-label="Toggle sidebar"><span></span><span></span></button>
+
+                <div class="sidebar-logo"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Admin Panel</div>
+                <p class="sidebar-subtext">RealVerify platform management.</p>
             </div>
 
             <nav class="sidebar-nav" aria-label="Admin sections">
-                <a class="sidebar-link" href="#section-overview" data-section="section-overview">📊 Overview</a>
-                <a class="sidebar-link" href="#section-listings" data-section="section-listings">🏠 Review Listings</a>
-                <a class="sidebar-link" href="#section-fraud" data-section="section-fraud">🚩 Fraud Alerts</a>
-                <a class="sidebar-link" href="#section-users" data-section="section-users">👥 All Users</a>
+                <a class="sidebar-link" href="#section-overview" data-section="section-overview"><span class="sidebar-link-icon">OV</span><span>Overview</span><span class="sidebar-tooltip">Overview</span></a>
+                <a class="sidebar-link" href="#section-listings" data-section="section-listings"><span class="sidebar-link-icon">RV</span><span>Review Listings</span><span class="sidebar-tooltip">Review Listings</span></a>
+                <a class="sidebar-link" href="#section-fraud" data-section="section-fraud"><span class="sidebar-link-icon">FR</span><span>Fraud Alerts</span><span class="sidebar-tooltip">Fraud Alerts</span></a>
+                <a class="sidebar-link" href="#section-users" data-section="section-users"><span class="sidebar-link-icon">US</span><span>All Users</span><span class="sidebar-tooltip">All Users</span></a>
             </nav>
 
-            <div class="sidebar-footer">
-                <button class="sidebar-signout" id="signout-btn-sidebar" type="button">Sign Out</button>
-            </div>
+            <div class="sidebar-footer"><button class="sidebar-signout" id="signout-btn-sidebar" type="button">Sign Out</button></div>
         </aside>
 
         <main class="dashboard-main">
             <section class="admin-section" id="section-overview" data-admin-section="section-overview">
-                <div class="section-header">
-                    <div>
-                        <h1>Dashboard Overview</h1>
-                        <p>Platform statistics at a glance</p>
-                    </div>
+                <div class="dashboard-hero-card reveal">
+                    <div><span class="section-kicker">Admin command center</span><h1>Dashboard Overview</h1><p>Monitor Nigerian property verification activity, fraud alerts, and users.</p></div>
                 </div>
 
                 <div class="admin-stats-grid">
-                    <article class="admin-stat-card">
-                        <span class="admin-stat-number" id="admin-stat-total">0</span>
-                        <span class="admin-stat-label">Total Properties</span>
-                    </article>
-
-                    <article class="admin-stat-card">
-                        <span class="admin-stat-number" id="admin-stat-verified">0</span>
-                        <span class="admin-stat-label">Verified</span>
-                    </article>
-
-                    <article class="admin-stat-card">
-                        <span class="admin-stat-number" id="admin-stat-pending">0</span>
-                        <span class="admin-stat-label">Pending Review</span>
-                    </article>
-
-                    <article class="admin-stat-card">
-                        <span class="admin-stat-number" id="admin-stat-rejected">0</span>
-                        <span class="admin-stat-label">Rejected</span>
-                    </article>
-
-                    <article class="admin-stat-card">
-                        <span class="admin-stat-number" id="admin-stat-users">0</span>
-                        <span class="admin-stat-label">Total Users</span>
-                    </article>
-
-                    <article class="admin-stat-card">
-                        <span class="admin-stat-number" id="admin-stat-flags">0</span>
-                        <span class="admin-stat-label">Fraud Alerts</span>
-                    </article>
+                    <article class="admin-stat-card reveal"><span class="admin-stat-number" id="admin-stat-total">0</span><span class="admin-stat-label">Total Properties</span></article>
+                    <article class="admin-stat-card reveal"><span class="admin-stat-number" id="admin-stat-verified">0</span><span class="admin-stat-label">Verified</span></article>
+                    <article class="admin-stat-card reveal"><span class="admin-stat-number" id="admin-stat-pending">0</span><span class="admin-stat-label">Pending Review</span></article>
+                    <article class="admin-stat-card reveal"><span class="admin-stat-number" id="admin-stat-rejected">0</span><span class="admin-stat-label">Rejected</span></article>
+                    <article class="admin-stat-card reveal"><span class="admin-stat-number" id="admin-stat-users">0</span><span class="admin-stat-label">Total Users</span></article>
+                    <article class="admin-stat-card reveal"><span class="admin-stat-number" id="admin-stat-flags">0</span><span class="admin-stat-label">Fraud Alerts</span></article>
                 </div>
             </section>
 
             <section class="admin-section" id="section-listings" data-admin-section="section-listings" hidden>
-                <div class="section-header">
-                    <div>
-                        <h2>Review Pending Listings</h2>
-                        <p>Approve or reject property submissions</p>
-                    </div>
-                    <button class="refresh-btn" type="button" onclick="loadPendingListings()">Refresh</button>
-                </div>
-
-                <div class="admin-panel-card" id="pending-listings-table">
-                    <div class="admin-loading">Loading pending listings...</div>
-                </div>
+                <div class="section-header"><div><span class="section-kicker">Verification queue</span><h2>Review Pending Listings</h2><p>Approve or reject property submissions after document review.</p></div><button class="refresh-btn" type="button" onclick="loadPendingListings()">Refresh</button></div>
+                <div class="admin-panel-card" id="pending-listings-table"><div class="admin-loading">Loading pending listings...</div></div>
             </section>
 
             <section class="admin-section" id="section-fraud" data-admin-section="section-fraud" hidden>
-                <div class="section-header">
-                    <div>
-                        <h2>Fraud Alerts</h2>
-                        <p>Reported listings and suspicious activity</p>
-                    </div>
-                    <button class="refresh-btn" type="button" onclick="loadFraudAlerts()">Refresh</button>
-                </div>
-
-                <div class="admin-panel-card" id="fraud-alerts-list">
-                    <div class="admin-loading">Loading fraud alerts...</div>
-                </div>
+                <div class="section-header"><div><span class="section-kicker">Risk center</span><h2>Fraud Alerts</h2><p>Reported listings and suspicious upload patterns.</p></div><button class="refresh-btn" type="button" onclick="loadFraudAlerts()">Refresh</button></div>
+                <div class="admin-panel-card" id="fraud-alerts-list"><div class="admin-loading">Loading fraud alerts...</div></div>
             </section>
 
             <section class="admin-section" id="section-users" data-admin-section="section-users" hidden>
-                <div class="section-header">
-                    <div>
-                        <h2>All Users</h2>
-                        <p>Everyone registered on RealVerify</p>
-                    </div>
-                </div>
-
-                <div class="admin-panel-card" id="all-users-table">
-                    <div class="admin-loading">Loading users...</div>
-                </div>
+                <div class="section-header"><div><span class="section-kicker">Community</span><h2>All Users</h2><p>Everyone registered on RealVerify.</p></div></div>
+                <div class="admin-panel-card" id="all-users-table"><div class="admin-loading">Loading users...</div></div>
             </section>
         </main>
     </div>
 
-    <footer class="admin-footer">
-        <p>RealVerify Admin Panel © 2025</p>
-    </footer>
+    <footer class="admin-footer"><p>RealVerify Admin Panel &copy; 2025</p></footer>
+    <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/fraud.js" type="module"></script>
     <script src="js/admin.js" type="module"></script>
     <script>
-        const adminSignoutButtons = [
-            document.getElementById('admin-nav-signout-btn'),
-            document.getElementById('signout-btn-sidebar')
-        ].filter(Boolean);
-
+        const adminSignoutButtons = [document.getElementById('admin-nav-signout-btn'), document.getElementById('signout-btn-sidebar')].filter(Boolean);
         adminSignoutButtons.forEach((button) => {
             button.addEventListener('click', async () => {
                 await supabaseClient.auth.signOut();
@@ -592,5 +89,6 @@
             });
         });
     </script>
+    <script src="js/app.js"></script>
 </body>
 </html>

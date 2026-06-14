@@ -1,0 +1,5 @@
+- [x] Analyze current codebase (index.html, css/style.css, js/app.js)
+- [ ] Rewrite index.html hero section with new layout
+- [ ] Add new hero CSS styles to style.css
+- [ ] Update JS animations for new hero elements
+- [ ] Test the result
