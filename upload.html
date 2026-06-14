@@ -9,15 +9,466 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        /* Dark luxury gold theme */
+        :root {
+            --bg-primary: #080601;
+            --bg-secondary: #0f0d06;
+            --gold: #c9a84c;
+            --border: rgba(201,168,76,0.2);
+            --text-primary: #ffffff;
+            --text-secondary: #b8b8b8;
+            --error-color: #ef4444;
+            --success-color: #10b981;
+        }
+
+        body {
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .upload-page {
+            padding: 60px 20px;
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+            min-height: 100vh;
+        }
+
+        .upload-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .upload-header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--gold) 0%, #e0c78a 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .upload-header p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .upload-section {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .upload-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-radius: 16px;
+            padding: 28px;
+        }
+
+        /* Form sections */
+        .form-section {
+            margin-bottom: 40px;
+            padding: 28px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-radius: 16px;
+            position: relative;
+            padding-top: 50px;
+        }
+
+        .form-section::before {
+            content: attr(data-section);
+            position: absolute;
+            top: 20px;
+            left: 28px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gold);
+            color: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        .form-section h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--gold);
+            margin-bottom: 10px;
+            margin-left: 50px;
+        }
+
+        .form-section-subtext {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+            margin-left: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: var(--error-color);
+            margin-left: 4px;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* File upload */
+        .file-upload-area {
+            border: 2px dashed var(--gold);
+            border-radius: 12px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: rgba(201, 168, 76, 0.03);
+        }
+
+        .file-upload-area:hover,
+        .file-upload-area.drag-over {
+            border-color: #e0c78a;
+            background: rgba(201, 168, 76, 0.08);
+        }
+
+        .file-upload-area svg {
+            width: 48px;
+            height: 48px;
+            color: var(--gold);
+            margin-bottom: 12px;
+        }
+
+        .file-upload-area .upload-text {
+            color: var(--text-primary);
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+
+        .file-upload-area .upload-subtext {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Preview grid */
+        .preview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 12px;
+            margin-top: 20px;
+        }
+
+        .preview-item {
+            position: relative;
+            border-radius: 8px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .preview-item img,
+        .preview-item video {
+            width: 100%;
+            height: 100px;
+            object-fit: cover;
+        }
+
+        .preview-item .preview-remove {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 24px;
+            height: 24px;
+            background: rgba(0, 0, 0, 0.7);
+            border-radius: 50%;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            line-height: 1;
+            padding: 0;
+        }
+
+        .preview-item .preview-remove:hover {
+            background: var(--error-color);
+        }
+
+        .preview-item .preview-checkmark {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 20px;
+            height: 20px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+        }
+
+        .preview-filename {
+            padding: 8px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        /* Witness boxes */
+        .witness-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 28px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .witness-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .witness-box {
+            padding: 24px;
+            background: rgba(201, 168, 76, 0.04);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-left: 3px solid var(--gold);
+            border-radius: 12px;
+        }
+
+        .witness-box h3 {
+            font-size: 1.1rem;
+            color: var(--gold);
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            margin-top: 3px;
+            cursor: pointer;
+            accent-color: var(--gold);
+        }
+
+        .checkbox-group label {
+            margin: 0;
+            cursor: pointer;
+            line-height: 1.5;
+        }
+
+        /* Error/Success messages */
+        .error-msg,
+        .success-msg {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            display: none;
+        }
+
+        .error-msg.show,
+        .success-msg.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        .error-msg {
+            background: rgba(239, 68, 68, 0.15);
+            border: 1px solid var(--error-color);
+            color: #fca5a5;
+        }
+
+        .success-msg {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid var(--success-color);
+            color: #a7f3d0;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Progress bar */
+        .upload-progress-container {
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(201, 168, 76, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(201, 168, 76, 0.2);
+        }
+
+        .progress-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        .progress-track {
+            height: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--gold) 0%, #e0c78a 100%);
+            width: 0%;
+            transition: width 0.2s ease;
+        }
+
+        /* Submit button */
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, var(--gold) 0%, #e0c78a 100%);
+            color: var(--bg-primary);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(201, 168, 76, 0.3);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Disclaimer */
+        .disclaimer-box {
+            padding: 16px;
+            background: rgba(201, 168, 76, 0.05);
+            border: 1px solid rgba(201, 168, 76, 0.15);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        .disclaimer-box strong {
+            color: var(--text-primary);
+        }
+
+        /* Video preview */
+        .video-preview-container {
+            margin-top: 20px;
+            padding: 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+        }
+
+        .video-preview-info {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+
+        video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 8px;
+            background: black;
+        }
+    </style>
 </head>
 <body>
-    <div class="page-loader" aria-hidden="true"><div class="loader-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div></div>
+    <div class="page-loader" aria-hidden="true"><div class="loader-mark"><svg width="34" height="34" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5376 15.7624 19.298 11.5 19.9381C7.23759 19.298 4 15.5376 4 11V6L12 3Z" stroke="currentColor" stroke-width="2"/></svg></div></div>
 
     <header class="navbar upload-navbar">
         <nav class="nav-container" aria-label="Main navigation">
-            <a class="brand logo" href="index.html" aria-label="RealVerify home"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a>
+            <a class="brand logo" href="index.html" aria-label="RealVerify home"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5376 15.7624 19.298 11.5 19.9381C7.23759 19.298 4 15.5376 4 11V6L12 3Z" stroke="currentColor" stroke-width="2"/></svg></span> RealVerify</a>
             <button class="nav-toggle" type="button" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
-            <div class="nav-menu"><div class="nav-links"><a href="index.html">Home</a><a href="property-listing.html">Properties</a></div><div class="nav-actions"><a class="view-site-link" href="dashboard.html">My Dashboard</a><button class="dashboard-signout" id="upload-signout-btn" type="button">Sign Out</button></div></div>
+            <div class="nav-menu"><div class="nav-links"><a href="index.html">Home</a><a href="property-listing.html">Properties</a></div><div class="nav-actions"><a class="view-site-link" href="dashboard.html">Dashboard</a><button id="upload-signout-btn" class="signout-btn">Sign Out</button></div></div>
         </nav>
     </header>
 
@@ -25,53 +476,334 @@
         <section class="upload-header">
             <div class="container reveal">
                 <span class="section-kicker">Seller workflow</span>
-                <h1 class="gradient-gold">List Your Property</h1>
-                <p>Submit accurate Nigerian property details and documents for RealVerify review before going live.</p>
+                <h1>List Your Cameroon Property</h1>
+                <p>Submit comprehensive property details and all required documents for RealVerify verification.</p>
             </div>
         </section>
 
         <section class="upload-section">
-            <div class="upload-card reveal">
+            <div class="upload-card">
                 <form id="upload-form">
-                    <section class="form-section">
+                    <!-- SECTION 1: PROPERTY INFORMATION -->
+                    <section class="form-section" data-section="1">
                         <h2>Property Information</h2>
-                        <p class="form-section-subtext">Provide clear details so our verification team can review your listing quickly.</p>
+                        <p class="form-section-subtext">Provide clear details about the property location and specifications.</p>
 
-                        <div class="form-group"><label for="prop-title">Property Title</label><input id="prop-title" name="title" type="text" placeholder="e.g. 4 Bedroom Duplex in Lekki" required></div>
-                        <div class="form-group"><label for="prop-description">Description</label><textarea id="prop-description" name="description" rows="5" placeholder="Describe the property in detail..." required></textarea></div>
+                        <div class="form-group">
+                            <label for="property-title">Property Title <span class="required">*</span></label>
+                            <input id="property-title" name="property_title" type="text" placeholder="e.g. Spacious 4-Bedroom House in Douala" required>
+                        </div>
 
-                        <div class="form-row">
-                            <div class="form-group"><label for="prop-location">Location</label><input id="prop-location" name="location" type="text" placeholder="e.g. Lekki Phase 1, Lagos" required></div>
-                            <div class="form-group"><label for="prop-type">Type</label><select id="prop-type" name="type" required><option value="">Select Type</option><option value="House">House</option><option value="Apartment">Apartment</option><option value="Land">Land</option><option value="Commercial">Commercial</option></select></div>
+                        <div class="form-group">
+                            <label for="property-type">Property Type <span class="required">*</span></label>
+                            <select id="property-type" name="property_type" required>
+                                <option value="">Select Property Type</option>
+                                <option value="House">House</option>
+                                <option value="Land">Land</option>
+                                <option value="Apartment">Apartment</option>
+                                <option value="Commercial Building">Commercial Building</option>
+                                <option value="Farm Land">Farm Land</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="property-description">Description <span class="required">*</span></label>
+                            <textarea id="property-description" name="property_description" rows="5" placeholder="Provide a detailed description of the property, features, condition, etc." required></textarea>
                         </div>
 
                         <div class="form-row">
-                            <div class="form-group"><label for="prop-price">Price in Naira</label><input id="prop-price" name="price" type="number" placeholder="e.g. 15000000" required></div>
-                            <div class="form-group"><label for="prop-size">Size in sqm</label><input id="prop-size" name="size" type="number" placeholder="e.g. 250" required></div>
+                            <div class="form-group">
+                                <label for="region">Region <span class="required">*</span></label>
+                                <select id="region" name="region" required>
+                                    <option value="">Select Region</option>
+                                    <option value="Centre">Centre</option>
+                                    <option value="Littoral">Littoral</option>
+                                    <option value="West">West</option>
+                                    <option value="Northwest">Northwest</option>
+                                    <option value="Southwest">Southwest</option>
+                                    <option value="North">North</option>
+                                    <option value="Adamawa">Adamawa</option>
+                                    <option value="Far North">Far North</option>
+                                    <option value="East">East</option>
+                                    <option value="South">South</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="city">City <span class="required">*</span></label>
+                                <select id="city" name="city" required>
+                                    <option value="">Select City</option>
+                                    <option value="Douala">Douala</option>
+                                    <option value="Yaoundé">Yaoundé</option>
+                                    <option value="Bafoussam">Bafoussam</option>
+                                    <option value="Bamenda">Bamenda</option>
+                                    <option value="Buea">Buea</option>
+                                    <option value="Limbe">Limbe</option>
+                                    <option value="Kribi">Kribi</option>
+                                    <option value="Ngaoundéré">Ngaoundéré</option>
+                                    <option value="Garoua">Garoua</option>
+                                    <option value="Bertoua">Bertoua</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="quarter">Quarter/Neighbourhood <span class="required">*</span></label>
+                            <input id="quarter" name="quarter" type="text" placeholder="e.g. Molyko, Buea" required>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="price">Price in FCFA <span class="required">*</span></label>
+                                <input id="price" name="price" type="number" placeholder="e.g. 50000000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="size">Size in Square Metres <span class="required">*</span></label>
+                                <input id="size" name="size" type="number" placeholder="e.g. 250" required>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="gps-lat">GPS Latitude (Optional)</label>
+                                <input id="gps-lat" name="gps_lat" type="number" placeholder="e.g. 4.0511" step="any">
+                            </div>
+                            <div class="form-group">
+                                <label for="gps-lng">GPS Longitude (Optional)</label>
+                                <input id="gps-lng" name="gps_lng" type="number" placeholder="e.g. 9.7679" step="any">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cadastral-number">Cadastral Number / Land Title Number (Optional)</label>
+                            <input id="cadastral-number" name="cadastral_number" type="text" placeholder="e.g. CM/LIT/DLA/123456">
                         </div>
                     </section>
 
-                    <section class="form-section">
-                        <h2>Property Images</h2>
-                        <p class="form-section-subtext">Upload up to 5 high-quality images of the property.</p>
-                        <div class="form-group"><label for="prop-images">Images</label><input class="file-input" id="prop-images" name="images" type="file" multiple accept="image/*"></div>
-                        <div class="image-preview-grid" id="image-previews" aria-live="polite"></div>
+                    <!-- SECTION 2: PROPERTY MEDIA -->
+                    <section class="form-section" data-section="2">
+                        <h2>Property Media</h2>
+                        <p class="form-section-subtext">Upload high-quality images and optional video of the property (up to 6 images, max 50MB video).</p>
+
+                        <div class="form-group">
+                            <label for="property-images">Property Images (up to 6) <span class="required">*</span></label>
+                            <div class="file-upload-area" id="image-upload-area">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                <div class="upload-text">Drag images here or click to select</div>
+                                <div class="upload-subtext">JPG, PNG up to 6 files</div>
+                            </div>
+                            <input class="file-input" id="property-images" name="property_images" type="file" multiple accept="image/*">
+                            <div class="preview-grid" id="image-previews"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="property-video">Property Video (Optional, max 50MB)</label>
+                            <div class="file-upload-area" id="video-upload-area">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                <div class="upload-text">Drag video here or click to select</div>
+                                <div class="upload-subtext">MP4, MOV, WebM - Max 50MB</div>
+                            </div>
+                            <input class="file-input" id="property-video" name="property_video" type="file" accept="video/mp4,video/quicktime,video/webm">
+                            <div class="video-preview-container" id="video-preview" style="display: none;">
+                                <div class="video-preview-info" id="video-filename"></div>
+                                <video id="video-element" controls></video>
+                                <button type="button" class="preview-remove" onclick="removeVideo()" style="margin-top: 12px; width: 100%;">Remove Video</button>
+                            </div>
+                        </div>
                     </section>
 
-                    <section class="form-section">
+                    <!-- SECTION 3: OWNERSHIP DOCUMENTS -->
+                    <section class="form-section" data-section="3">
                         <h2>Ownership Documents</h2>
-                        <p class="form-section-subtext">Upload title deed, ownership proof, survey, allocation letter, or relevant documents.</p>
-                        <div class="form-group"><label for="prop-documents">Documents</label><input class="file-input" id="prop-documents" name="documents" type="file" multiple accept=".pdf,image/*"></div>
-                        <div class="document-list" id="document-list" aria-live="polite"></div>
+                        <p class="form-section-subtext">Upload a clear scan or photo of the original property ownership document.</p>
+
+                        <div class="form-group">
+                            <label for="document-type">Document Type <span class="required">*</span></label>
+                            <select id="document-type" name="document_type" required>
+                                <option value="">Select Document Type</option>
+                                <option value="Land Title Certificate">Land Title Certificate (Titre Foncier)</option>
+                                <option value="Certificate of Occupancy">Certificate of Occupancy</option>
+                                <option value="Deed of Sale">Deed of Sale (Acte de Vente)</option>
+                                <option value="Survey Plan">Survey Plan / Cadastral Plan</option>
+                                <option value="Inheritance Document">Inheritance Document (Acte de Succession)</option>
+                                <option value="Power of Attorney">Power of Attorney (Procuration)</option>
+                                <option value="Other">Other (specify)</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="other-doc-type">If "Other", please specify:</label>
+                            <input id="other-doc-type" name="other_doc_type" type="text" placeholder="e.g. Bank document, etc.">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ownership-doc">Upload Original Document <span class="required">*</span></label>
+                            <div class="file-upload-area" id="doc-upload-area">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+                                <div class="upload-text">Drag document here or click to select</div>
+                                <div class="upload-subtext">PDF or image (clear scan or photo)</div>
+                            </div>
+                            <input class="file-input" id="ownership-doc" name="ownership_doc" type="file" accept="image/*,application/pdf">
+                            <div id="doc-preview" style="margin-top: 16px;"></div>
+                        </div>
                     </section>
 
-                    <div class="upload-progress-container" id="upload-progress-container" hidden><div class="progress-label">Uploading...</div><div class="progress-track"><div class="progress-bar" id="progress-bar"></div></div></div>
+                    <!-- SECTION 4: OWNER IDENTITY VERIFICATION -->
+                    <section class="form-section" data-section="4">
+                        <h2>Owner Identity Verification</h2>
+                        <p class="form-section-subtext">Upload clear scans or photos of your national ID and signature.</p>
 
-                    <div class="disclaimer-box"><span class="disclaimer-icon" aria-hidden="true"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span><p>Your listing will be reviewed by our Nigerian verification team before it goes live. This usually takes 24-48 hours.</p></div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="id-front">National ID Card (Front) <span class="required">*</span></label>
+                                <div class="file-upload-area" id="id-front-area">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v10a2 2 0 002 2h5m0 0h5a2 2 0 002-2v-10a2 2 0 00-2-2h-5m0 0V5a2 2 0 012-2h1a2 2 0 012 2v1m0 0h3a2 2 0 012 2v10a2 2 0 01-2 2h-3m0 0v1a2 2 0 01-2 2H9a2 2 0 01-2-2v-1m0 0H5"></path></svg>
+                                    <div class="upload-text">Upload ID Front</div>
+                                    <div class="upload-subtext">Image or PDF</div>
+                                </div>
+                                <input class="file-input" id="id-front" name="id_front" type="file" accept="image/*,application/pdf">
+                                <div id="id-front-preview" style="margin-top: 16px;"></div>
+                            </div>
 
-                    <button class="submit-btn" id="submit-btn" type="submit">Submit for Verification</button>
-                    <div class="error-msg" id="error-msg" role="alert" hidden></div>
-                    <div class="success-msg" id="success-msg" role="status" aria-live="polite" hidden>Property submitted successfully! Our team will review it within 24-48 hours. Redirecting to your dashboard...</div>
+                            <div class="form-group">
+                                <label for="id-back">National ID Card (Back) <span class="required">*</span></label>
+                                <div class="file-upload-area" id="id-back-area">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v10a2 2 0 002 2h5m0 0h5a2 2 0 002-2v-10a2 2 0 00-2-2h-5m0 0V5a2 2 0 012-2h1a2 2 0 012 2v1m0 0h3a2 2 0 012 2v10a2 2 0 01-2 2h-3m0 0v1a2 2 0 01-2 2H9a2 2 0 01-2-2v-1m0 0H5"></path></svg>
+                                    <div class="upload-text">Upload ID Back</div>
+                                    <div class="upload-subtext">Image or PDF</div>
+                                </div>
+                                <input class="file-input" id="id-back" name="id_back" type="file" accept="image/*,application/pdf">
+                                <div id="id-back-preview" style="margin-top: 16px;"></div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="owner-signature">Your Signature <span class="required">*</span></label>
+                            <p class="form-section-subtext" style="margin: 8px 0 16px 0;">Sign on paper, take a clear photo, and upload it. Or upload a scanned signature image.</p>
+                            <div class="file-upload-area" id="signature-upload-area">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21H3v-3.5L16.732 3.732z"></path></svg>
+                                <div class="upload-text">Upload Signature</div>
+                                <div class="upload-subtext">Image file</div>
+                            </div>
+                            <input class="file-input" id="owner-signature" name="owner_signature" type="file" accept="image/*">
+                            <div id="signature-preview" style="margin-top: 16px;"></div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 5: WITNESS INFORMATION -->
+                    <section class="form-section" data-section="5">
+                        <h2>Witness Information</h2>
+                        <p class="form-section-subtext">Provide information for 2 witnesses and upload their identification documents and signatures.</p>
+
+                        <div class="witness-container">
+                            <!-- WITNESS 1 -->
+                            <div class="witness-box">
+                                <h3>Witness 1 Information</h3>
+
+                                <div class="form-group">
+                                    <label for="witness1-name">Witness Full Name <span class="required">*</span></label>
+                                    <input id="witness1-name" name="witness1_name" type="text" placeholder="e.g. Jean Nkosi" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness1-phone">Witness Phone Number <span class="required">*</span></label>
+                                    <input id="witness1-phone" name="witness1_phone" type="tel" placeholder="+237 6XX XXX XXX" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness1-id">Witness ID Number <span class="required">*</span></label>
+                                    <input id="witness1-id" name="witness1_id" type="text" placeholder="e.g. 123456789" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness1-id-scan">Upload Witness National ID <span class="required">*</span></label>
+                                    <div class="file-upload-area" id="witness1-id-area">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <div class="upload-text">Upload ID Scan/Photo</div>
+                                        <div class="upload-subtext">Image</div>
+                                    </div>
+                                    <input class="file-input" id="witness1-id-scan" name="witness1_id_scan" type="file" accept="image/*">
+                                    <div id="witness1-id-preview" style="margin-top: 16px;"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness1-signature">Upload Witness Signature <span class="required">*</span></label>
+                                    <div class="file-upload-area" id="witness1-sig-area">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21H3v-3.5L16.732 3.732z"></path></svg>
+                                        <div class="upload-text">Upload Signature</div>
+                                        <div class="upload-subtext">Image</div>
+                                    </div>
+                                    <input class="file-input" id="witness1-signature" name="witness1_signature" type="file" accept="image/*">
+                                    <div id="witness1-sig-preview" style="margin-top: 16px;"></div>
+                                </div>
+                            </div>
+
+                            <!-- WITNESS 2 -->
+                            <div class="witness-box">
+                                <h3>Witness 2 Information</h3>
+
+                                <div class="form-group">
+                                    <label for="witness2-name">Witness Full Name <span class="required">*</span></label>
+                                    <input id="witness2-name" name="witness2_name" type="text" placeholder="e.g. Marie Dubé" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness2-phone">Witness Phone Number <span class="required">*</span></label>
+                                    <input id="witness2-phone" name="witness2_phone" type="tel" placeholder="+237 6XX XXX XXX" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness2-id">Witness ID Number <span class="required">*</span></label>
+                                    <input id="witness2-id" name="witness2_id" type="text" placeholder="e.g. 123456789" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness2-id-scan">Upload Witness National ID <span class="required">*</span></label>
+                                    <div class="file-upload-area" id="witness2-id-area">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                        <div class="upload-text">Upload ID Scan/Photo</div>
+                                        <div class="upload-subtext">Image</div>
+                                    </div>
+                                    <input class="file-input" id="witness2-id-scan" name="witness2_id_scan" type="file" accept="image/*">
+                                    <div id="witness2-id-preview" style="margin-top: 16px;"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="witness2-signature">Upload Witness Signature <span class="required">*</span></label>
+                                    <div class="file-upload-area" id="witness2-sig-area">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21H3v-3.5L16.732 3.732z"></path></svg>
+                                        <div class="upload-text">Upload Signature</div>
+                                        <div class="upload-subtext">Image</div>
+                                    </div>
+                                    <input class="file-input" id="witness2-signature" name="witness2_signature" type="file" accept="image/*">
+                                    <div id="witness2-sig-preview" style="margin-top: 16px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- SECTION 6: SELLER SIGNATURE CONFIRMATION -->
+                    <section class="form-section" data-section="6">
+                        <h2>Confirmation</h2>
+                        <p class="form-section-subtext">Please confirm that all information is accurate and authentic.</p>
+
+                        <div class="checkbox-group">
+                            <input id="confirm-checkbox" name="confirm_accuracy" type="checkbox" required>
+                            <label for="confirm-checkbox">I confirm that all information and documents provided are accurate and authentic, and I understand that providing false information may result in account suspension and legal action.</label>
+                        </div>
+                    </section>
+
+                    <!-- MESSAGES -->
+                    <div class="error-msg" id="error-msg" role="alert"></div>
+                    <div class="success-msg" id="success-msg" role="status" aria-live="polite"></div>
+                    <div class="upload-progress-container" id="upload-progress-container" style="display: none;">
+                        <div class="progress-label" id="progress-label">Uploading files...</div>
+                        <div class="progress-track">
+                            <div class="progress-bar" id="progress-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- SUBMIT BUTTON -->
+                    <button class="submit-btn" id="submit-btn" type="submit">Submit Property for Review</button>
                 </form>
             </div>
         </section>
@@ -79,15 +811,15 @@
 
     <footer class="footer">
         <div class="container footer-grid">
-            <div><a class="footer-logo logo" href="index.html"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5 16.1 19.1 12 21C7.9 19.1 5 15.5 5 11V6L12 3Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12L11 14L15.5 9.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>RealVerify</a><p>Verified real estate for safer property decisions across Nigeria.</p></div>
-            <div class="footer-column"><h4>Quick Links</h4><a href="index.html">Home</a><a href="property-listing.html">Properties</a><a href="index.html#how-it-works">How It Works</a><a href="signup.html">Sign Up</a></div>
-            <div class="footer-column"><h4>Contact</h4><a href="mailto:hello@realverify.ng">hello@realverify.ng</a><a href="tel:+2348000000000">+234 800 000 0000</a><p>Lagos, Nigeria</p></div>
-            <div class="footer-column"><h4>Social</h4><div class="social-links"><a class="social-link" href="https://facebook.com" target="_blank" rel="noopener" aria-label="Facebook">Fb</a><a class="social-link" href="https://twitter.com" target="_blank" rel="noopener" aria-label="Twitter">X</a><a class="social-link" href="https://instagram.com" target="_blank" rel="noopener" aria-label="Instagram">Ig</a><a class="social-link" href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">In</a><a class="social-link" href="https://wa.me/2348000000000" target="_blank" rel="noopener" aria-label="WhatsApp">Wa</a></div></div>
+            <div><a class="footer-logo logo" href="index.html"><span class="brand-icon" aria-hidden="true"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 3L19 6V11C19 15.5376 15.7624 19.298 11.5 19.9381C7.23759 19.298 4 15.5376 4 11V6L12 3Z" stroke="currentColor" stroke-width="2"/></svg></span> RealVerify</a><p>&copy; 2025 RealVerify</p></div>
+            <div class="footer-column"><h4>Quick Links</h4><a href="index.html">Home</a><a href="property-listing.html">Properties</a><a href="index.html#how-it-works">How It Works</a></div>
+            <div class="footer-column"><h4>Contact</h4><a href="mailto:hello@realverify.cm">hello@realverify.cm</a><a href="tel:+237XXX000000">+237 XXX 000 000</a><p>Cameroon</p></div>
+            <div class="footer-column"><h4>Legal</h4><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
         </div>
-        <div class="container footer-bottom"><p>&copy; 2025 RealVerify. All rights reserved.</p></div>
     </footer>
 
     <button class="back-to-top" type="button" aria-label="Back to top">Top</button>
+
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="js/supabase.js"></script>
     <script src="js/auth.js"></script>
